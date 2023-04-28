@@ -1,1 +1,1 @@
-g++ top.cpp  -lsfml-graphics -lsfml-window -lsfml-system ; ./a.out
+ g++ main.cpp map.cpp GamePause.cpp  Player.cpp Enemi.cpp Game.cpp Score.cpp  -lsfml-graphics -lsfml-window -lsfml-system ; ./a.out
