@@ -16,6 +16,7 @@ public:
     Score();
     ~Score();
     void updateScore();
+    void increaseScore(int score);
     void Draw(RenderTarget &target);
     bool isMaxScore() { return this->score >= MAX_SCORE; }
 

@@ -36,6 +36,12 @@ void Score::updateScore()
     this->text.setString("Score: " + to_string(this->score));
 }
 
+void Score::increaseScore(int score)
+{
+    this->score += score ;
+    this->text.setString("Score: " + to_string(this->score));
+}
+
 void Score::Draw(RenderTarget &target)
 {
     target.draw(this->text);

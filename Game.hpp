@@ -8,6 +8,7 @@
 #include "Player.hpp"
 #include "GamePause.hpp"
 #include "map.hpp"
+#include "star.hpp"
 
 using namespace std ;
 using namespace sf ;
@@ -21,18 +22,20 @@ private:
     void initVariables();
     void initPlayer();
     void initBackground();
+    void initStar();
     void initEnemie();
     void updateCollision();
     void initScore();
     void initGamePause();
     void initMap();
+    void scoreUpdate();
     bool isPause = false;
 
     float x=0;
     float y=0;
 
 
-    View view;
+    // View view;
     Score *score;
     Texture Background;
     Sprite BackgroundSprite;
@@ -43,6 +46,10 @@ private:
     Event ev;
     player *player1;
     vector<enemie*> enemies;
+
+
+    //star
+    Star *star;
 
 
 

@@ -1,6 +1,8 @@
 #include "Player.hpp"
 
-player::player(int x, int y) : velocity(0, 0) , m_gravity(0, 9)
+
+
+player::player(int x, int y ) : velocity(0, 0) , m_gravity(0, 500)
 {
     this->position.x = x;
     this->position.y = y;
@@ -15,11 +17,28 @@ player::player(int x, int y) : velocity(0, 0) , m_gravity(0, 9)
 
 }
 
+void player::initMap(Map *map)
+{
+    this->map = map;
+}
+
 player::~player()
 {
 
 }
 
+void player::checkCollisionWithMap()
+{
+    if (map->checkCollision(sprite.getGlobalBounds()) != -1 )
+    {
+        // this->velocity.y = 0;
+        Ylimit = map->checkCollision(sprite.getGlobalBounds())-sprite.getGlobalBounds().height;
+        // cout << "collision " << map->checkCollision(sprite.getGlobalBounds()) << endl;
+    }else
+    {
+        Ylimit = 500;
+    }
+}
 void player::setTexture(int index)
 {
     this->sprite.setTexture(*textures[index]);
@@ -42,11 +61,18 @@ void player::spriteRectUpdate()
 
 void player::loadTextures()
 {
-    for (int i = 0; i < 5; i++)
-    {
-        textures.push_back(new Texture());
-        textures[i]->loadFromFile("sprite/2728FC_prev_ui.png", IntRect(i*100,0, 100, 100));
-    }
+    // Clock clock;
+    // if(clock.getElapsedTime().asMilliseconds() >= 50)
+    // {
+        for (int i = 0; i < 5; i++)
+        {
+            textures.push_back(new Texture());
+            textures[i]->loadFromFile("sprite/2728FC_prev_ui.png", IntRect(i*100,0, 100, 100));
+        }
+        // clock.restart();
+        
+    // }
+    
 }
 
 void player::updateWindowBoundsCollision()
@@ -72,29 +98,43 @@ void player::updateWindowBoundsCollision()
 void player::Draw(RenderWindow &window)
 {
     window.draw(this->sprite);
-    this-> update(0.1f);
+    this-> update(0.001f);
     this->setgravity();
     spriteRectUpdate();
+    checkCollisionWithMap();
     
     
 }
 
 void player::move(Event *ev)
 {
-    cout << "move" << endl;
-    if (ev->key.code == Keyboard::Key::A)
+    if (Keyboard::isKeyPressed(Keyboard::Key::A))
     {
         this->position.x -= STEP_SIZE;
     }
-    if (ev->key.code == Keyboard::Key::D)
+    if (Keyboard::isKeyPressed(Keyboard::Key::D))
     {
         this->position.x += STEP_SIZE;
         
     }
-    if (ev->key.code == Keyboard::Key::Space)
+    if (Keyboard::isKeyPressed(Keyboard::Key::Space))
     {
         this->jump();
     }
+    // cout << "move" << endl;
+    // if (ev->key.code == Keyboard::Key::A)
+    // {
+    //     this->position.x -= STEP_SIZE;
+    // }
+    // if (ev->key.code == Keyboard::Key::D)
+    // {
+    //     this->position.x += STEP_SIZE;
+        
+    // }
+    // if (ev->key.code == Keyboard::Key::Space)
+    // {
+    //     this->jump();
+    // }
     
 
 
@@ -109,31 +149,48 @@ void player::setgravity()
 {
     velocity.y += Ygravity;
     position.y += velocity.y;
-    if (position.y > 500)
+    if (position.y > Ylimit)
     {
         velocity.y = 0;
-        position.y = 500;
+        position.y = Ylimit;
     }
 }
 
 
 
-
-
-void player::update(float deltaTime) {
-    // Apply gravity
+void player::update(float deltaTime)
+{
+    // Update the player's velocity and position
     velocity += m_gravity * deltaTime;
+    position += velocity * deltaTime;
+    sprite.setPosition(position);
 
-    // Update position
-    velocity += m_gravity * deltaTime;
-    if (position.y > 600) { // Prevent player from falling through the floor
-        position.y = 600;
-        velocity.y = 0;
+    // Check if the player has landed after a jump
+    if (position.y >= Ylimit)
+    {
+        position.y = Ylimit;
+        velocity.y = 0.0f;
+        m_isJumping = false;
     }
 }
+
+
+
+// void player::update(float deltaTime) {
+//     // Apply gravity
+//     velocity += m_gravity * deltaTime;
+
+//     // Update position
+
+//     velocity += m_gravity * deltaTime;
+//     if (position.y > 600) { // Prevent player from falling through the floor
+//         position.y = 1000;
+//         velocity.y = 0;
+//     }
+// }
 
 void player::jump() {
-    velocity.y = -400; // Set upward velocity for jump
+    velocity.y = -100; // Set upward velocity for jump
 }
 
     

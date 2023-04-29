@@ -8,12 +8,16 @@ using namespace sf ;
 int main(){
     Game game;
     Clock clock;
+    Time time;
     while (game.running())
     {
-        if(clock.getElapsedTime().asMilliseconds() >= 50)
+        if(clock.getElapsedTime().asMilliseconds() >= 40)
         {
-            game.PlayGame();
+            
+            float time = clock.restart().asMilliseconds();
+            game.PlayGame() ;
             clock.restart();
+            // cout << time << endl;
             
         }
         

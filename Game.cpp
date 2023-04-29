@@ -10,8 +10,14 @@ Game::Game()
     initScore();
     initGamePause();
     initMap();
-    sf::View view(sf::FloatRect(x, y, 600.f, 600.f));
-    window->setView(view);
+    initStar();
+    player1->initMap(map);
+    // sf::View view(sf::FloatRect(x, y, 600.f, 600.f));
+    // window->setView(view);
+
+
+
+
 }
 
 Game::~Game()
@@ -30,6 +36,10 @@ void Game::initMap()
     this->map = new Map(226);
 }
 
+void Game::initStar()
+{
+    this->star = new Star();
+}
 
 void Game::updateCollision()
 {
@@ -67,7 +77,6 @@ void Game::update()
 
     pollEvents();
     map->update();
-    // player1->update(0.2);
 
 
 
@@ -79,7 +88,7 @@ void Game::update()
         e->move(&ev);
     }
     updateCollision();
-
+    scoreUpdate();
 
 }
 
@@ -94,7 +103,7 @@ void Game::initWindow()
     videoMode.height = WINDOW_HEIGHT;
     videoMode.width = WINDOW_WIDTH;
     this->window = new RenderWindow(videoMode, "Taha Game", Style::Titlebar | Style::Close);
-    // window->setFramerateLimit(60);
+    window->setFramerateLimit(60);
     
 }
 
@@ -107,8 +116,8 @@ void Game::render()
 {
     this->window->clear(Color(135,206,235));
     this->Draw();
-    view.setCenter(player1->getposition());
-    window->setView(view);
+    // view.setCenter(player1->getposition());
+    // window->setView(view);
 
     this->window->display();
 }
@@ -118,6 +127,14 @@ bool Game::running()
     return this->window->isOpen() && !score->isMaxScore();
 }
 
+void Game::scoreUpdate()
+{
+    if (star->checkCollisionWithPlayer(player1->getSprite().getGlobalBounds()))
+    {
+        score->increaseScore(2);
+    }
+    
+}   
 
 void Game::Draw()
 {
@@ -130,6 +147,8 @@ void Game::Draw()
         e->Draw(*this->window);
     }
     score->Draw(*this->window);
+
+    star->Draw(*this->window);
 }
 
 void Game::initPlayer()
@@ -192,7 +211,7 @@ void Game::pollEvents()
             
             if(ev.key.code == Keyboard::Space)
             {
-                initEnemie();
+                // initEnemie();
                 cout << "space" << endl;
             }
  

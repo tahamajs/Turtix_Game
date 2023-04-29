@@ -28,7 +28,8 @@ public:
     void loadTextures(const std::string& path);
     void loadTiles(const std::string& path);
     float checkCollision(FloatRect rect);
-    
+
+
     
 
 private:
@@ -36,3 +37,62 @@ private:
     std::vector<Texture*> textures_;
     int size_;
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
