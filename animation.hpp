@@ -2,55 +2,76 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Const.hpp"
+#include <vector>
+
+
 
 
 
 class Animation {
 public:
-    Animation(sf::Texture& texture, int numFrames, float frameDuration) :
-        m_texture(texture),
+    Animation(sf::Sprite& _sp , int numFrames, float frameDuration , string _path , int _frameWidth , int _frameHight) :
+        m_sprite(&_sp),
         m_numFrames(numFrames),
         m_currentFrame(0),
         m_frameDuration(frameDuration),
         m_elapsedTime(0),
-        m_frameWidth(texture.getSize().x / numFrames)
+        m_frameWidth(_frameWidth),
+        m_frameHight(_frameHight),
+        path(_path)
     {
         initTexture();
-        m_sprite.setTexture(m_texture);
-
-        m_sprite.setTextureRect(sf::IntRect(0, 0, m_frameWidth, m_texture.getSize().y));
+        m_sprite->setTexture(*textures[index]);
     }
 
     void update(float deltaTime) {
         m_elapsedTime += deltaTime;
+        
         if (m_elapsedTime >= m_frameDuration) {
+            cout << "Frame duration: " << index << endl;
             m_elapsedTime -= m_frameDuration;
             m_currentFrame = (m_currentFrame + 1) % m_numFrames;
-            m_sprite.setTextureRect(sf::IntRect(m_currentFrame * m_frameWidth, 0, m_frameWidth, m_texture.getSize().y));
+            m_sprite->setTexture(*textures[index]);
+            index ++;
+            if (index == m_numFrames)
+            {
+                index = 0;
+            }
         }
+
     }
 
-    void setPosition(float x, float y) {
-        m_sprite.setPosition(x, y);
-    }
 
     void initTexture() {
-        if (!m_texture.loadFromFile("sprite/16F884_prev_ui.png")) {
-            std::cout << "Error::Player::Could not load texture file." << std::endl;
+        loadTextures();
+    }
+
+    // void draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    //     // target.draw(m_sprite, states);
+    // }
+
+    void loadTextures()
+    {
+        for (int i = 0; i < m_numFrames; i++)
+        {
+            Texture *texture = new Texture();
+            texture->loadFromFile(path, IntRect(i*135,0, 140, 140));
+            textures.push_back(texture);
         }
     }
 
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const {
-        target.draw(m_sprite, states);
-    }
-
-
 private:
-    sf::Texture& m_texture;
-    sf::Sprite m_sprite;
+    
+    sf::Sprite *m_sprite;
     int m_numFrames;
     int m_currentFrame;
     float m_frameDuration;
     float m_elapsedTime;
     int m_frameWidth;
+    int m_frameHight ;
+    int index = 0;
+    vector<Texture*> textures;
+
+    string path;
+
 };

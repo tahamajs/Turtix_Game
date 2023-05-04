@@ -6,7 +6,7 @@
 #include "Const.hpp"
 #include <vector>
 #include "map.hpp"
-// #include "animation.hpp"
+#include "animation.hpp"
 
 
 
@@ -17,7 +17,6 @@ private:
     Vector2f position;
     Vector2f velocity;
     int health;
-    // Texture *texture;
     Sprite sprite;
     IntRect rect;
     Texture *texture ;
@@ -27,6 +26,7 @@ private:
     void updateWindowBoundsCollision();
     void jump();
     void setgravity();
+    void initAnimation();
     Vector2f m_gravity;
     bool m_isJumping = false;
     Map *map;
@@ -34,7 +34,7 @@ private:
     vector<Sprite*> *collitionSprites;
     bool canleft = true;
     bool canright = true;
-    // Animation animation;
+    Animation *animation;
 
     
     int index = 0;

@@ -6,7 +6,6 @@ Game::Game()
     initVariables();
     initWindow();
     initPlayer();
-    // initBackground();
     initScore();
     initGamePause();
     initMap();
@@ -97,11 +96,11 @@ void Game::Draw()
     
     
     this->player1->Draw(*this->window);
-
+    map->draw(*window);
     score->Draw(*this->window,view.getCenter());
 
     star->Draw(*this->window);
-    map->draw(*window);
+    
     window->draw(this->BackgroundSprite);
 }
 
@@ -123,42 +122,14 @@ void Game::pollEvents()
             this->window->close();
             break;
         case Event::KeyPressed:
-            // if (ev.key.code == Keyboard::Up)
-            // {
-            //     y-=10;
-            //     cout << "jj" << endl;
-                
-            //     window->setView(View((FloatRect(x, y, 600.f, 600.f))));
-
-            // }
-            // if (ev.key.code == Keyboard::Down)
-            // {
-            //     y+=10;
-            //     window->setView(View((FloatRect(x, y, 600.f, 600.f))));
-
-            // }
-            // if (ev.key.code == Keyboard::Left)
-            // {
-            //     x-=10;
-
-                
-            //     window->setView(View((FloatRect(x, y, 600.f, 600.f))));
-
-            // }if (ev.key.code == Keyboard::Right)
-            // {
-
-            //     x+=10;
-
-                
-            //     window->setView(View((FloatRect(x, y, 600.f, 600.f))));
-
-            // }
-
             if (ev.key.code == Keyboard::Escape)
             {
                 isPause = !isPause;
             }
             player1->move(&ev);
+                view = window->getView();
+                view.setCenter(player1->getposition());
+                window->setView(view);
             
             
             break;

@@ -14,8 +14,15 @@ player::player(int x, int y ) : velocity(0, 0) , m_gravity(0, Xgravity)
     this->sprite.setPosition(this->position);
     this->sprite.setScale(-0.4, 0.4);
     // this->sprite.setOrigin(70, 70);
+    initAnimation();
     this->loadTextures();
 }
+
+void player::initAnimation()
+{
+    animation = new Animation(sprite, 5,.1,"sprite/16F884_prev_ui.png",140,140);
+}
+
 
 // void Player::initAnimation(){
 
@@ -48,7 +55,7 @@ void player::checkCollisionWithMap()
     if (map->checkCollision(sprite.getGlobalBounds()) != -1 && map->isCollisionOnLeft(sprite) )
     {
         canleft = false;
-        cout << "collision on left" << endl;
+        // cout << "collision on left" << endl;
     }else{
         canleft = true;
     }
@@ -56,7 +63,7 @@ void player::checkCollisionWithMap()
     if (map->checkCollision(sprite.getGlobalBounds()) != -1 && map->isCollisionOnRight(sprite) )
     {
         canright = false;
-        cout << "collision on right" << endl;
+        // cout << "collision on right" << endl;
     }else{
         canright = true;
     }
@@ -66,7 +73,7 @@ void player::checkCollisionWithMap()
     if (map->checkCollision(sprite.getGlobalBounds()) != -1 && map->isCollisionOnTop(sprite) )
     {
         // this->velocity.y = 0;if 
-        cout << "collection " << endl ;
+        // cout << "collection " << endl ;
         Ylimit = map->checkCollision(sprite.getGlobalBounds())-sprite.getGlobalBounds().height;
         // cout << "collision " << map->checkCollision(sprite.getGlobalBounds()) << endl;
     }else
@@ -131,8 +138,9 @@ void player::Draw(RenderWindow &window)
     // cout << Ylimit << "akjealkwejdhlawkejfl" << endl;
     window.draw(this->sprite);
     this->setgravity();
-    spriteRectUpdate();
+    // spriteRectUpdate();
     checkCollisionWithMap();
+    // animation->update(0.1);
     
     
 }
@@ -145,18 +153,20 @@ void player::move(Event *ev)
         if (canleft)
         {
             this->position.x -= STEP_SIZE;
+            animation->update(0.1);
         }
         // this->position.x -= STEP_SIZE;
-        // this->sprite.setScale(0.4, 0.4);
+        this->sprite.setScale(0.4, 0.4);
     }
     if (Keyboard::isKeyPressed(Keyboard::Key::D))
     {
         if (canright)
         {
             this->position.x += STEP_SIZE;
+            animation->update(0.1);
         }
         // this->position.x += STEP_SIZE;
-        // this->sprite.setScale(-0.4, 0.4);
+        this->sprite.setScale(-0.4, 0.4);
         
     }
     if (Keyboard::isKeyPressed(Keyboard::Key::Space))
