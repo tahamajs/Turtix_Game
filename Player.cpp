@@ -70,12 +70,12 @@ void player::checkCollisionWithMap()
     
 
 
-    if (map->checkCollision(sprite.getGlobalBounds()) != -1 && map->isCollisionOnTop(sprite) )
+    if ((Ylimit = map->checkCollision(sprite.getGlobalBounds())) != -1 && map->isCollisionOnTop(sprite) )
     {
         // this->velocity.y = 0;if 
         // cout << "collection " << endl ;
-        cout << "collision " << map->checkCollision(sprite.getGlobalBounds()) << endl;
-        Ylimit = map->checkCollision(sprite.getGlobalBounds())-sprite.getGlobalBounds().height;
+        Ylimit = map->checkCollision(sprite.getGlobalBounds())-sprite.getGlobalBounds().height/2;
+        cout << "collision " << map->checkCollision(sprite.getGlobalBounds()) << "  " << Ylimit<<  endl;
 
         // Ylimit = map->checkCollision(sprite.getGlobalBounds());
     }else
@@ -160,7 +160,7 @@ void player::move(Event *ev)
             this->sprite.setScale(1, 1);
 
         }
-        
+
         // this->position.x -= STEP_SIZE;
         
         // sprite.setPosition(sprite.getPosition().x, sprite.getPosition().y + sprite.getGlobalBounds().width);

@@ -14,4 +14,4 @@ const float Ygravity = 30 ;
 const int VIEW_HIGHT = 1000; 
 const int VIEW_WIDTH = 600;
 const int JUMP_SPEED = 50;
-const int DEAD_Y_DIRECTION = 1000;
+const int DEAD_Y_DIRECTION = 2000;
