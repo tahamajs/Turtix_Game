@@ -18,7 +18,6 @@ int main(){
             game.PlayGame() ;
             clock.restart();
             // cout << time << endl;
-            
         }
         
         

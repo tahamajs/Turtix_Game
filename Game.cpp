@@ -12,11 +12,8 @@ Game::Game()
     initMap();
     initStar();
     player1->initMap(map);
-    // sf::View view(sf::FloatRect(x, y, 600.f, 600.f));
-    // window->setView(view);
-
-
-
+    sf::View view(sf::FloatRect(x, y, VIEW_HIGHT, VIEW_WIDTH));
+    window->setView(view);
 
 }
 
@@ -41,62 +38,18 @@ void Game::initStar()
     this->star = new Star();
 }
 
-void Game::updateCollision()
-{
-    int i = 0;
-    for (auto &e : this->enemies)
-    {
-        if (e->getSprite().getGlobalBounds().intersects(this->player1->getSprite().getGlobalBounds()))
-        {
-            // 
-            e->minusHealth(10);
-            if (e->isAlive() == false)
-            {
-                enemies.erase(enemies.begin() + i);
-             
-                score->updateScore();
-            }
-        }
-        i++;
-    }
-}
-
-void Game::initEnemie()
-{
-    //randem enemie
-    int randomx = rand() % WINDOW_WIDTH;
-    int randomy = rand() % WINDOW_HEIGHT;
 
 
-
-    this->enemies.push_back(new enemie(randomx, randomy));
-}
 
 void Game::update()
 {
 
     pollEvents();
     map->update();
-
-
-
-
-
-
-    for(auto &e : this->enemies)
-    {
-        e->move(&ev);
-    }
-    updateCollision();
     scoreUpdate();
 
 }
 
-// void Game::initBackground()
-// {
-//     this->Background.loadFromFile("bkk.png");
-//     this->BackgroundSprite.setTexture(this->Background);
-// }
 
 void Game::initWindow()
 {
@@ -107,6 +60,8 @@ void Game::initWindow()
     
 }
 
+
+
 void Game::initVariables()
 {
     this->window = nullptr;
@@ -116,8 +71,9 @@ void Game::render()
 {
     this->window->clear(Color(135,206,235));
     this->Draw();
-    // view.setCenter(player1->getposition());
-    // window->setView(view);
+    view = window->getView();
+    view.setCenter(player1->getposition());
+    window->setView(view);
 
     this->window->display();
 }
@@ -138,17 +94,15 @@ void Game::scoreUpdate()
 
 void Game::Draw()
 {
-    map->draw(*window);
-    window->draw(this->BackgroundSprite);
+    
+    
     this->player1->Draw(*this->window);
 
-    for(auto &e : this->enemies)
-    {
-        e->Draw(*this->window);
-    }
-    score->Draw(*this->window);
+    score->Draw(*this->window,view.getCenter());
 
     star->Draw(*this->window);
+    map->draw(*window);
+    window->draw(this->BackgroundSprite);
 }
 
 void Game::initPlayer()
@@ -204,17 +158,7 @@ void Game::pollEvents()
             {
                 isPause = !isPause;
             }
-            // if(!isPause) {
-                player1->move(&ev);
-            // }
-
-            
-            if(ev.key.code == Keyboard::Space)
-            {
-                // initEnemie();
-                cout << "space" << endl;
-            }
- 
+            player1->move(&ev);
             
             
             break;

@@ -42,8 +42,9 @@ void Score::increaseScore(int score)
     this->text.setString("Score: " + to_string(this->score));
 }
 
-void Score::Draw(RenderTarget &target)
+void Score::Draw(RenderTarget &target , Vector2f position)
 {
+    this->text.setPosition(position.x -500, position.y -300);
     target.draw(this->text);
 }
 

@@ -17,7 +17,7 @@ public:
     ~Score();
     void updateScore();
     void increaseScore(int score);
-    void Draw(RenderTarget &target);
+    void Draw(RenderTarget &target , Vector2f position);
     bool isMaxScore() { return this->score >= MAX_SCORE; }
 
 };

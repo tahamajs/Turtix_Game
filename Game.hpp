@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include "Score.hpp"
-#include "Enemi.hpp"
 #include "Player.hpp"
 #include "GamePause.hpp"
 #include "map.hpp"
@@ -23,8 +22,6 @@ private:
     void initPlayer();
     void initBackground();
     void initStar();
-    void initEnemie();
-    void updateCollision();
     void initScore();
     void initGamePause();
     void initMap();
@@ -35,7 +32,7 @@ private:
     float y=0;
 
 
-    // View view;
+    View view;
     Score *score;
     Texture Background;
     Sprite BackgroundSprite;
@@ -45,7 +42,6 @@ private:
     RenderWindow *window;
     Event ev;
     player *player1;
-    vector<enemie*> enemies;
 
 
     //star

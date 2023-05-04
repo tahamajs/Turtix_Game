@@ -28,6 +28,9 @@ public:
     void loadTextures(const std::string& path);
     void loadTiles(const std::string& path);
     float checkCollision(FloatRect rect);
+    bool isCollisionOnTop( const sf::Sprite& player);
+    bool isCollisionOnLeft(const sf::Sprite& player);
+    bool isCollisionOnRight(const sf::Sprite& player);
 
 
     
@@ -37,62 +40,3 @@ private:
     std::vector<Texture*> textures_;
     int size_;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

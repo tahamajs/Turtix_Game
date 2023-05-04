@@ -19,20 +19,23 @@ float Map::checkCollision(FloatRect rect) {
     for (int i = 0; i < tiles_.size(); i++) {
         Tile& tile = tiles_[i];
         if (tile.moveable && tile.sprite != nullptr) {
-            if (tile.sprite->getGlobalBounds().intersects(rect) ) {
-                // cout << tile.sprite->getGlobalBounds().top << endl;
-                return tile.sprite->getGlobalBounds().top;
+            if (tile.sprite->getGlobalBounds().intersects(rect)) {
+                return tile.sprite->getGlobalBounds().top+2;
             }
         }else{
-            cout << "Tile is not moveable" << endl;
-            cout << "Tile type: " << tiles_.size() << endl;
+            if (tile.sprite == nullptr)
+            {
+                cout << "Tile sprite is null" << endl;
+            }
+            
+            // cout << "Tile is not moveable" << endl;
         }
     }
     return -1;
 }
 
 Map::Map(int size) : size_(size) {
-    tiles_.resize(size_);
+    // tiles_.resize(size_);
     loadTextures("./");
     loadTiles("./");
     cout << "Map loaded" << endl;
@@ -111,29 +114,89 @@ void Map::loadTiles(const std::string& path) {
         cout << "Error opening file" << endl;
         abort();
     }
+    Tile tile;
+
     int x = 100;
     int y = 100;
     int type = 0;
     int i = 0;
+
     while (file >> type_info >> type >> x >> y) {
-        tiles_[i].x = x * 32;
-        tiles_[i].y = y * 32;
-        tiles_[i].type = type;
+        tile.x = x * 32;
+        tile.y = y * 32;
+        tile.type = type;
         if (textures_[type] != nullptr) {  // Check if texture pointer is null
-            tiles_[i].sprite = new Sprite(*textures_[type]);
-            tiles_[i].sprite->setPosition(tiles_[i].x, tiles_[i].y);
+            tile.sprite = new Sprite(*textures_[type]);
+            tile.sprite->setPosition(tile.x, tile.y);
             cout << "Tile " << i << " loaded" << endl;
         } else {
-            tiles_[i].sprite = nullptr;
+            tile.sprite = nullptr;
             cout << "Tile " << i << " not loaded" << endl;
         }
+        tiles_.push_back(tile);
         i++;
-        // x += 32;
-        // if (x >= 640) {
-        //     x = 0;
-        //     y += 32;
-        // }
+        
     }
-    file.close();
 
+}
+
+// need to check leter if it works
+bool Map::isCollisionOnTop( const sf::Sprite& player) {
+    sf::FloatRect bounds = player.getGlobalBounds();
+    for(int i = 0; i < tiles_.size(); i++) {
+        Tile& tile = tiles_[i];
+        if (tile.sprite != nullptr) {
+            sf::FloatRect tileBounds = tile.sprite->getGlobalBounds();
+            if (bounds.intersects(tileBounds)) {
+                // cout << "Collision detected" << endl;
+                float bottom = bounds.top ;
+                float top = tileBounds.top;
+                if (bottom <= top) {
+                    cout << bottom << " " << top << endl;
+                    cout << top << endl;
+                    cout << "Collision on top" << endl;
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+bool Map::isCollisionOnLeft(const sf::Sprite& player) {
+    sf::FloatRect bounds = player.getGlobalBounds();
+    for(int i = 0; i < tiles_.size(); i++) {
+        Tile& tile = tiles_[i];
+        if (tile.sprite != nullptr) {
+            sf::FloatRect tileBounds = tile.sprite->getGlobalBounds();
+            if (bounds.intersects(tileBounds)) {
+                // cout << "Collision detected" << endl;
+                float right = bounds.left;
+                float left = tileBounds.left;
+                if (right >= left && bounds.top  > tileBounds.top - tileBounds.height) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+bool Map::isCollisionOnRight(const sf::Sprite& player) {
+    sf::FloatRect bounds = player.getGlobalBounds();
+    for(int i = 0; i < tiles_.size(); i++) {
+        Tile& tile = tiles_[i];
+        if (tile.sprite != nullptr) {
+            sf::FloatRect tileBounds = tile.sprite->getGlobalBounds();
+            if (bounds.intersects(tileBounds)) {
+                // cout << "Collision detected" << endl;
+                float left = bounds.left;
+                float right = tileBounds.left ;
+                if (left <= right && bounds.top  > tileBounds.top - tileBounds.height) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
