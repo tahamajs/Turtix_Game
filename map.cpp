@@ -149,9 +149,9 @@ bool Map::isCollisionOnTop( const sf::Sprite& player) {
             sf::FloatRect tileBounds = tile.sprite->getGlobalBounds();
             if (bounds.intersects(tileBounds)) {
                 // cout << "Collision detected" << endl;
-                float bottom = bounds.top ;
+                float bottom = bounds.top-bounds.height ;
                 float top = tileBounds.top;
-                if (bottom <= top) {
+                if (bottom  <= top) {
                     cout << bottom << " " << top << endl;
                     cout << top << endl;
                     cout << "Collision on top" << endl;
