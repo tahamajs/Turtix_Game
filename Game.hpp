@@ -8,6 +8,7 @@
 #include "GamePause.hpp"
 #include "map.hpp"
 #include "star.hpp"
+#include "menu.hpp"
 
 using namespace std ;
 using namespace sf ;
@@ -20,12 +21,12 @@ private:
     void initWindow();
     void initVariables();
     void initPlayer();
-    void initBackground();
     void initStar();
     void initScore();
     void initGamePause();
     void initMap();
     void scoreUpdate();
+    void initMenu();
     bool isPause = false;
 
     float x=0;
@@ -42,6 +43,8 @@ private:
     RenderWindow *window;
     Event ev;
     player *player1;
+    Menu *menu;
+    GameState gameState = GameState::PLAYING;
 
 
     //star

@@ -27,7 +27,7 @@ private:
 public:
     GamePause(RenderWindow *window);
     ~GamePause();
-    void update(bool &ispause);
+    void update(enum GameState &gameState);
     void render();
-    void pollEvents(bool &ispause);
+    void pollEvents(enum GameState &gameState);
 };

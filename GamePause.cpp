@@ -64,9 +64,9 @@ void GamePause::initFont()
     this->font->loadFromFile("font.ttf");
 }
 
-void GamePause::update(bool &ispause)
+void GamePause::update(enum GameState &gameStat)
 {
-    this->pollEvents(ispause);
+    this->pollEvents(gameStat);
 }
 
 void GamePause::render()
@@ -78,7 +78,7 @@ void GamePause::render()
     this->pause_window->display();
 }
 
-void GamePause::pollEvents(bool &ispause)
+void GamePause::pollEvents(enum GameState &gameStat)
 {
     while (this->pause_window->pollEvent(this->ev))
     {
@@ -91,7 +91,7 @@ void GamePause::pollEvents(bool &ispause)
             if (this->ev.key.code == Keyboard::Escape)
             {
                 // this->pause_window->close();
-                ispause = false;
+                gameStat = GameState::PLAYING;
             }
             break;
         case Event::MouseButtonPressed:
@@ -99,7 +99,7 @@ void GamePause::pollEvents(bool &ispause)
             {
                 if (this->button->getGlobalBounds().contains(this->pause_window->mapPixelToCoords(Mouse::getPosition(*this->pause_window))))
                 {
-                    ispause = false;
+                    gameStat = GameState::PLAYING;
                 }
             }
             break;

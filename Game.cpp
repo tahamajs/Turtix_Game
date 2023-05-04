@@ -10,10 +10,18 @@ Game::Game()
     initGamePause();
     initMap();
     initStar();
+    initMenu();
     player1->initMap(map);
     sf::View view(sf::FloatRect(x, y, VIEW_HIGHT, VIEW_WIDTH));
     window->setView(view);
 
+}
+
+void Game::initMenu()
+{
+    // this->menu = new Menu(window,Vector2f(WINDOW_WIDTH/2,WINDOW_HEIGHT/2),Vector2f(300,300));
+    Vector2f Vect = Vector2f(WINDOW_WIDTH/2,WINDOW_HEIGHT/2);
+    this->menu = new Menu(*this->window,Vect);
 }
 
 Game::~Game()
@@ -122,12 +130,20 @@ void Game::pollEvents()
         case Event::KeyPressed:
             if (ev.key.code == Keyboard::Escape)
             {
-                isPause = !isPause;
+                // isPause = !isPause;
+                // GameState = 2;
+                gameState = GameState::PAUSED;
             }
+            else if (ev.key.code == Keyboard::Enter)
+            {
+                gameState = GameState::MENU;
+            }
+
             player1->move(&ev);
-                view = window->getView();
-                view.setCenter(player1->getposition());
-                window->setView(view);
+            view = window->getView();
+            view.setCenter(player1->getposition());
+            window->setView(view);
+
             
             
             break;
@@ -140,12 +156,17 @@ void Game::pollEvents()
 
 void Game::PlayGame()
 {
-    if(!isPause){
+    if(gameState == GameState::PLAYING){
         this->update();
         this->render();
         return;
-    }else{
+    }
+    else if(gameState == GameState::PAUSED){
         PauseGame();
+    }
+    else if(gameState == GameState::MENU){
+        menu->update(gameState);
+        menu->render();
     }
 }
 
@@ -156,6 +177,6 @@ void Game::initGamePause()
 
 void Game::PauseGame()
 {
-    this->gamePause->update(isPause);
+    this->gamePause->update(gameState);
     this->gamePause->render();
 }

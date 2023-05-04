@@ -1,6 +1,15 @@
 using namespace std ;
 using namespace sf ;
 
+enum GameState {
+  MENU,
+  PLAYING,
+  PAUSED,
+  GAME_OVER,
+  EXIT
+};
+
+
 #pragma once
 const int STEP_SIZE = 15 ;
 const int WINDOW_WIDTH = 1000 ;
