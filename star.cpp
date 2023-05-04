@@ -50,7 +50,8 @@ void Star::Draw(RenderWindow &window)
 void Star::loadTextures()
 {
     textures.push_back(new Texture());
-    textures[0]->loadFromFile("sprite/3B58F1_prev_ui.png", IntRect(0,0, 100, 100));
+    textures[0]->loadFromFile("sprite/stars_1.png", IntRect(0,0, 100, 100));
+    
     
 }
 

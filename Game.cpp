@@ -93,8 +93,6 @@ void Game::scoreUpdate()
 
 void Game::Draw()
 {
-    
-    
     this->player1->Draw(*this->window);
     map->draw(*window);
     score->Draw(*this->window,view.getCenter());

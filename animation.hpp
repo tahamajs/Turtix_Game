@@ -10,7 +10,7 @@
 
 class Animation {
 public:
-    Animation(sf::Sprite& _sp , int numFrames, float frameDuration , string _path , int _frameWidth , int _frameHight) :
+    Animation(sf::Sprite& _sp , int numFrames,int _colNums , float frameDuration , string _path , int _frameWidth , int _frameHight) :
         m_sprite(&_sp),
         m_numFrames(numFrames),
         m_currentFrame(0),
@@ -18,7 +18,8 @@ public:
         m_elapsedTime(0),
         m_frameWidth(_frameWidth),
         m_frameHight(_frameHight),
-        path(_path)
+        path(_path),
+        colNums(_colNums)
     {
         initTexture();
         m_sprite->setTexture(*textures[index]);
@@ -57,9 +58,14 @@ public:
         for (int i = 0; i < m_numFrames; i++)
         {
             Texture *texture = new Texture();
-            texture->loadFromFile(path, IntRect(i_*96,j_*96, m_frameWidth, m_frameHight));
+            
+            if(texture->loadFromFile(path, IntRect(i_*m_frameWidth,j_*m_frameHight, m_frameWidth, m_frameHight))){
+                cout << "Texture loaded successfully" << endl;
+            }else{
+                cout << "Texture not loaded" << endl;
+            }
             textures.push_back(texture);
-            if (i_ ==  4)
+            if (i_ ==  colNums-1)
             {
                 i_=0;
                 j_++;
@@ -83,6 +89,7 @@ private:
     int m_frameWidth;
     int m_frameHight ;
     int index = 0;
+    int colNums = 0;
     vector<Texture*> textures;
 
     string path;

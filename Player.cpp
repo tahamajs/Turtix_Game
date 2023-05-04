@@ -20,7 +20,7 @@ player::player(int x, int y ) : velocity(0, 0) , m_gravity(0, Xgravity)
 
 void player::initAnimation()
 {
-    animation = new Animation(sprite,16 ,.1,"sprite/MainPicture.png",100,100);
+    animation = new Animation(sprite,16 ,5,.1,"sprite/MainPicture.png",96,96);
 }
 
 
@@ -55,7 +55,7 @@ void player::checkCollisionWithMap()
     if (map->checkCollision(sprite.getGlobalBounds()) != -1 && map->isCollisionOnLeft(sprite) )
     {
         canleft = false;
-        // cout << "collision on left" << endl;
+        cout << "collision on left" << endl;
     }else{
         canleft = true;
     }
@@ -63,7 +63,7 @@ void player::checkCollisionWithMap()
     if (map->checkCollision(sprite.getGlobalBounds()) != -1 && map->isCollisionOnRight(sprite) )
     {
         canright = false;
-        // cout << "collision on right" << endl;
+        cout << "collision on right" << endl;
     }else{
         canright = true;
     }
@@ -75,7 +75,7 @@ void player::checkCollisionWithMap()
         // this->velocity.y = 0;if 
         // cout << "collection " << endl ;
         Ylimit = map->checkCollision(sprite.getGlobalBounds())-sprite.getGlobalBounds().height/2;
-        cout << "collision " << map->checkCollision(sprite.getGlobalBounds()) << "  " << Ylimit<<  endl;
+        // cout << "collision " << map->checkCollision(sprite.getGlobalBounds()) << "  " << Ylimit<<  endl;
 
         // Ylimit = map->checkCollision(sprite.getGlobalBounds());
     }else
@@ -194,21 +194,7 @@ void player::move(Event *ev)
             jump();
         }
     }
-    // cout << "move" << endl;
-    // if (ev->key.code == Keyboard::Key::A)
-    // {
-    //     this->position.x -= STEP_SIZE;
-    // }
-    // if (ev->key.code == Keyboard::Key::D)
-    // {
-    //     this->position.x += STEP_SIZE;
-        
-    // }
-    // if (ev->key.code == Keyboard::Key::Space)
-    // {
-    //     this->jump();
-    // }
-    
+
 
 
 

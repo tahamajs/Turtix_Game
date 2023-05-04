@@ -19,7 +19,8 @@ float Map::checkCollision(FloatRect rect) {
     for (int i = 0; i < tiles_.size(); i++) {
         Tile& tile = tiles_[i];
         if (tile.moveable && tile.sprite != nullptr) {
-            if (tile.sprite->getGlobalBounds().intersects(rect)) {
+            if (tile.sprite->getGlobalBounds().intersects(rect) && tile.type != 1) {
+
                 return tile.sprite->getGlobalBounds().top+2;
             }
         }else{
@@ -72,11 +73,11 @@ void Map::loadTextures(const std::string& path) {
         cout << "Error loading texture" << endl;
         abort();
     }
-    // if (!textures_[1] -> loadFromFile(path + "tilesheet.png", IntRect(HIGHT_WIDTH, 0, HIGHT_WIDTH, HIGHT_WIDTH)))
-    // {
-    //     cout << "Error loading texture" << endl;
-    //     abort();
-    // }
+    if (!textures_[1] -> loadFromFile(path + "Gate_Start.png", IntRect(50, 50, HEIGHT_*3, WIDTH_*3)))
+    {
+        cout << "Error loading texture" << endl;
+        abort();
+    }
     // if (!textures_[2] -> loadFromFile(path + "tilesheet.png", IntRect(64, 0, HIGHT_WIDTH, HIGHT_WIDTH)))
     // {
     //     cout << "Error loading texture" << endl;
@@ -140,14 +141,14 @@ bool Map::isCollisionOnTop( const sf::Sprite& player) {
         Tile& tile = tiles_[i];
         if (tile.sprite != nullptr) {
             sf::FloatRect tileBounds = tile.sprite->getGlobalBounds();
-            if (bounds.intersects(tileBounds)) {
+            if (bounds.intersects(tileBounds) && tile.type != 1) {
                 // cout << "Collision detected" << endl;
                 float bottom = bounds.top ;
                 float top = tileBounds.top;
                 if (bottom  <= top) {
                     // cout << bottom << " " << top << endl;
                     // cout << top << endl;
-                    cout << "Collision on top" << endl;
+                    // cout << "Collision on top" << endl;
                     return true;
                 }
             }
@@ -162,11 +163,11 @@ bool Map::isCollisionOnLeft(const sf::Sprite& player) {
         Tile& tile = tiles_[i];
         if (tile.sprite != nullptr) {
             sf::FloatRect tileBounds = tile.sprite->getGlobalBounds();
-            if (bounds.intersects(tileBounds)) {
+            if (bounds.intersects(tileBounds) && tile.type != 1){
                 // cout << "Collision detected" << endl;
                 float right = bounds.left;
                 float left = tileBounds.left;
-                if (right >= left && bounds.top  > tileBounds.top - tileBounds.height) {
+                if (right >= left && bounds.top  > tileBounds.top ) {
                     return true;
                 }
             }
@@ -181,7 +182,7 @@ bool Map::isCollisionOnRight(const sf::Sprite& player) {
         Tile& tile = tiles_[i];
         if (tile.sprite != nullptr) {
             sf::FloatRect tileBounds = tile.sprite->getGlobalBounds();
-            if (bounds.intersects(tileBounds)) {
+            if (bounds.intersects(tileBounds) && tile.type != 1) {
                 // cout << "Collision detected" << endl;
                 float left = bounds.left;
                 float right = tileBounds.left ;

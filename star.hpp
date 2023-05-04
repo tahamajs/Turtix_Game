@@ -29,6 +29,7 @@ private:
     // void updateWindowBoundsCollision();
     void loadTextures();
     void loadStars();
+    // vector<Texture*> Textures;
     
     
 public:
