@@ -11,3 +11,4 @@ const int MAX_SCORE = 1000 ;
 const float Xgravity = 1000 ;
 const float Ygravity = 50 ;
 const int TAIL_NUM = 112 ;
+// const int TAIL_SIZE = 10 ;
