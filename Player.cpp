@@ -12,7 +12,7 @@ player::player(int x, int y ) : velocity(0, 0) , m_gravity(0, Xgravity)
     this->texture->loadFromFile("sprite/2728FC_prev_ui.png", rect);
     this->sprite.setTexture(*this->texture);
     this->sprite.setPosition(this->position);
-    this->sprite.setScale(-0.4, 0.4);
+    // this->sprite.setScale(-0.4, 0.4);
     // this->sprite.setOrigin(70, 70);
     initAnimation();
     this->loadTextures();
@@ -156,7 +156,7 @@ void player::move(Event *ev)
             animation->update(0.1);
         }
         // this->position.x -= STEP_SIZE;
-        this->sprite.setScale(0.4, 0.4);
+        this->sprite.setScale(1, 1);
     }
     if (Keyboard::isKeyPressed(Keyboard::Key::D))
     {
@@ -166,7 +166,7 @@ void player::move(Event *ev)
             animation->update(0.1);
         }
         // this->position.x += STEP_SIZE;
-        this->sprite.setScale(-0.4, 0.4);
+        this->sprite.setScale(-1, 1);
         
     }
     if (Keyboard::isKeyPressed(Keyboard::Key::Space))

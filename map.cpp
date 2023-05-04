@@ -1,5 +1,6 @@
 #include "map.hpp"
-
+const int HEIGHT_ = 100 ;
+const int WIDTH_ = 100 ;
 
 void Map::update() {
     for (Tile& tile : tiles_) {
@@ -11,9 +12,8 @@ void Map::update() {
         }
         
     }
-    
-
 }
+
 
 float Map::checkCollision(FloatRect rect) {
     for (int i = 0; i < tiles_.size(); i++) {
@@ -36,7 +36,7 @@ float Map::checkCollision(FloatRect rect) {
 
 Map::Map(int size) : size_(size) {
     // tiles_.resize(size_);
-    loadTextures("./");
+    loadTextures("sprite/");
     loadTiles("./");
     cout << "Map loaded" << endl;
 }
@@ -54,7 +54,6 @@ void Map::draw(RenderWindow& window) {
     for (Tile& tile : tiles_) {
         if (tile.sprite != nullptr) {  // Check if sprite pointer is null
             Sprite sprite(*tile.sprite);
-            // sprite.setPosition(tile.x, tile.y);
             window.draw(sprite);
 
         }
@@ -68,37 +67,31 @@ void Map::loadTextures(const std::string& path) {
     textures_[2] = new Texture;
     textures_[3] = new Texture;
     textures_[4] = new Texture;
-    if (!textures_[0] -> loadFromFile(path + "tilesheet.png", IntRect(0, 0, 32, 32)))
+    if (!textures_[0] -> loadFromFile(path + "Shadows.png", IntRect(200, 200, HEIGHT_, WIDTH_)))
     {
         cout << "Error loading texture" << endl;
         abort();
     }
-    if (!textures_[1] -> loadFromFile(path + "tilesheet.png", IntRect(32, 0, 32, 32)))
-    {
-        cout << "Error loading texture" << endl;
-        abort();
-    }
-    if (!textures_[2] -> loadFromFile(path + "tilesheet.png", IntRect(64, 0, 32, 32)))
-    {
-        cout << "Error loading texture" << endl;
-        abort();
-    }
-    if (!textures_[3] -> loadFromFile(path + "tilesheet.png", IntRect(96, 0, 32, 32)))
-    {
-        cout << "Error loading texture" << endl;
-        abort();
-    }
-    if(!textures_[4] -> loadFromFile(path + "tilesheet.png", IntRect(128, 0, 32, 32)))
-    {
-        cout << "Error loading texture" << endl;
-        abort();
-    }
-    
-    
-    
-
-    
-
+    // if (!textures_[1] -> loadFromFile(path + "tilesheet.png", IntRect(HIGHT_WIDTH, 0, HIGHT_WIDTH, HIGHT_WIDTH)))
+    // {
+    //     cout << "Error loading texture" << endl;
+    //     abort();
+    // }
+    // if (!textures_[2] -> loadFromFile(path + "tilesheet.png", IntRect(64, 0, HIGHT_WIDTH, HIGHT_WIDTH)))
+    // {
+    //     cout << "Error loading texture" << endl;
+    //     abort();
+    // }
+    // if (!textures_[3] -> loadFromFile(path + "tilesheet.png", IntRect(96, 0, HIGHT_WIDTH, HIGHT_WIDTH)))
+    // {
+    //     cout << "Error loading texture" << endl;
+    //     abort();
+    // }
+    // if(!textures_[4] -> loadFromFile(path + "tilesheet.png", IntRect(128, 0, HIGHT_WIDTH, HIGHT_WIDTH)))
+    // {
+    //     cout << "Error loading texture" << endl;
+    //     abort();
+    // }
 
 }
 
@@ -122,8 +115,8 @@ void Map::loadTiles(const std::string& path) {
     int i = 0;
 
     while (file >> type_info >> type >> x >> y) {
-        tile.x = x * 32;
-        tile.y = y * 32;
+        tile.x = x * HEIGHT_;
+        tile.y = y * WIDTH_;
         tile.type = type;
         if (textures_[type] != nullptr) {  // Check if texture pointer is null
             tile.sprite = new Sprite(*textures_[type]);
