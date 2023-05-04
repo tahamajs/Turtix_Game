@@ -1,6 +1,6 @@
 #include "map.hpp"
 const int HEIGHT_ = 100 ;
-const int WIDTH_ = 100 ;
+const int WIDTH_ = 50 ;
 
 void Map::update() {
     for (Tile& tile : tiles_) {
@@ -67,7 +67,7 @@ void Map::loadTextures(const std::string& path) {
     textures_[2] = new Texture;
     textures_[3] = new Texture;
     textures_[4] = new Texture;
-    if (!textures_[0] -> loadFromFile(path + "Shadows.png", IntRect(200, 200, HEIGHT_, WIDTH_)))
+    if (!textures_[0] -> loadFromFile(path + "Shadows.png", IntRect(0, 650,HEIGHT_, WIDTH_)))
     {
         cout << "Error loading texture" << endl;
         abort();
@@ -147,7 +147,7 @@ bool Map::isCollisionOnTop( const sf::Sprite& player) {
                 if (bottom  <= top) {
                     // cout << bottom << " " << top << endl;
                     // cout << top << endl;
-                    // cout << "Collision on top" << endl;
+                    cout << "Collision on top" << endl;
                     return true;
                 }
             }

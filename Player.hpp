@@ -30,7 +30,7 @@ private:
     Vector2f m_gravity;
     bool m_isJumping = false;
     Map *map;
-    float Ylimit = 600;
+    float Ylimit = DEAD_Y_DIRECTION;
     vector<Sprite*> *collitionSprites;
     bool canleft = true;
     bool canright = true;

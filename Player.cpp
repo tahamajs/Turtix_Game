@@ -7,20 +7,20 @@ player::player(int x, int y ) : velocity(0, 0) , m_gravity(0, Xgravity)
     this->position.x = x;
     this->position.y = y;
     this->health = 100;
-    rect = IntRect(0, 140 ,140, 140);
+    rect = IntRect(0, 100 ,100, 100);
     texture = new Texture();
     this->texture->loadFromFile("sprite/2728FC_prev_ui.png", rect);
     this->sprite.setTexture(*this->texture);
     this->sprite.setPosition(this->position);
     // this->sprite.setScale(-0.4, 0.4);
-    // this->sprite.setOrigin(70, 70);
+    this->sprite.setOrigin(sprite.getGlobalBounds().width/2, sprite.getGlobalBounds().height/2);
     initAnimation();
     this->loadTextures();
 }
 
 void player::initAnimation()
 {
-    animation = new Animation(sprite, 5,.1,"sprite/16F884_prev_ui.png",140,140);
+    animation = new Animation(sprite,16 ,.1,"sprite/MainPicture.png",100,100);
 }
 
 
@@ -74,11 +74,13 @@ void player::checkCollisionWithMap()
     {
         // this->velocity.y = 0;if 
         // cout << "collection " << endl ;
+        cout << "collision " << map->checkCollision(sprite.getGlobalBounds()) << endl;
         Ylimit = map->checkCollision(sprite.getGlobalBounds())-sprite.getGlobalBounds().height;
-        // cout << "collision " << map->checkCollision(sprite.getGlobalBounds()) << endl;
+
+        // Ylimit = map->checkCollision(sprite.getGlobalBounds());
     }else
     {
-        Ylimit = 500;
+        Ylimit = DEAD_Y_DIRECTION;
     }
 }
 void player::setTexture(int index)
@@ -103,6 +105,7 @@ void player::spriteRectUpdate()
 
 void player::loadTextures()
 {
+
 
     for (int i = 0; i < 5; i++)
     {
@@ -154,19 +157,33 @@ void player::move(Event *ev)
         {
             this->position.x -= STEP_SIZE;
             animation->update(0.1);
+            this->sprite.setScale(1, 1);
+
         }
+        
         // this->position.x -= STEP_SIZE;
-        this->sprite.setScale(1, 1);
+        
+        // sprite.setPosition(sprite.getPosition().x, sprite.getPosition().y + sprite.getGlobalBounds().width);
+
     }
     if (Keyboard::isKeyPressed(Keyboard::Key::D))
     {
         if (canright)
         {
             this->position.x += STEP_SIZE;
+            this->sprite.setScale(-1, 1);
             animation->update(0.1);
+            if (sprite.getScale()!=Vector2f(-1,1))
+            {
+                position.x += sprite.getGlobalBounds().width;
+            }
+            
+
         }
         // this->position.x += STEP_SIZE;
-        this->sprite.setScale(-1, 1);
+        
+
+        // sprite.setPosition(sprite.getPosition().x, sprite.getPosition().y + sprite.getGlobalBounds().width);
         
     }
     if (Keyboard::isKeyPressed(Keyboard::Key::Space))

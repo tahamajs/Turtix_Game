@@ -52,11 +52,24 @@ public:
 
     void loadTextures()
     {
+        int j_ = 0;
+        int i_ = 0;
         for (int i = 0; i < m_numFrames; i++)
         {
             Texture *texture = new Texture();
-            texture->loadFromFile(path, IntRect(i*135,0, 140, 140));
+            texture->loadFromFile(path, IntRect(i_*96,j_*96, m_frameWidth, m_frameHight));
             textures.push_back(texture);
+            if (i_ ==  4)
+            {
+                i_=0;
+                j_++;
+            }
+            else
+            {
+                i_++;
+            }
+
+            
         }
     }
 
