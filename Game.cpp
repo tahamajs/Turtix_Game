@@ -1,4 +1,6 @@
 #include "Game.hpp"
+//need to add Enemys
+
 
 Game::Game()
 {
@@ -197,6 +199,7 @@ void Game::PlayGame()
     }
     else if (gameState == GameState::GAME_OVER)
     {
+        //need to add game over screen
         Text text;
         Font *font = new Font();
         font->loadFromFile("fonts/MenuFont.otf");
@@ -220,6 +223,7 @@ void Game::PlayGame()
     }
     else if (gameState == GameState::WIN)
     {
+        //need to add win screen
         // this->window->close();
         cout << "You Win" << endl;
         Text text;
