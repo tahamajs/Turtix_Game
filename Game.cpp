@@ -61,6 +61,22 @@ void Game::initMusicPlayer()
 
 void Game::ColisionWithEnemy()
 {
+    for(int i = 0 ; i < enemys.size() ; i++)
+    {
+        if (enemys[i]->isCollisionWithPlayerNONTOP())
+        {
+            // gameState = GameState::GAME_OVER;
+            cout << "GAME OVER" << endl;
+            enemys.erase(enemys.begin()+i);
+        }
+        if (enemys[i]->isCollisionWithPlayerTop())
+        {
+            // enemi->reset();
+            // score->addScore(100);
+            cout << "ENEMY DEAD" << endl;
+
+        }
+    }
     // if (enemi->isCollisionWithPlayerNONTOP())
     // {
     //     // gameState = GameState::GAME_OVER;
