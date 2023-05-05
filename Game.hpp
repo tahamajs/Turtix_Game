@@ -44,7 +44,7 @@ private:
     Event ev;
     player *player1;
     Menu *menu;
-    GameState gameState = GameState::PLAYING;
+    GameState gameState = GameState::MENU;
 
 
     //star

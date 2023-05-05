@@ -3,11 +3,11 @@
 GamePause::GamePause(RenderWindow *window)
 {
     this->initVariables();
+    this->initFont();
     this->initWindow(window);
     // this->initBackground();
     this->initButtons();
     this->initText();
-    this->initFont();
 }
 
 GamePause::~GamePause()
@@ -53,15 +53,22 @@ void GamePause::initButtons()
 
 void GamePause::initText()
 {
-    this->text = new Text("kjmnl.snem ,mm,", *this->font, 50);
-    this->text->setFillColor(Color::Blue);
+    this->text = new Text("RESUME ", *this->font, 50);
+    this->text->setFillColor(Color::Green);
     this->text->setPosition(this->button->getPosition().x + this->button->getGlobalBounds().width / 2 - this->text->getGlobalBounds().width / 2, this->button->getPosition().y + this->button->getGlobalBounds().height / 2 - this->text->getGlobalBounds().height / 2);
 }
 
 void GamePause::initFont()
 {
     this->font = new Font();
-    this->font->loadFromFile("font.ttf");
+    if (!this->font->loadFromFile("fonts/MenuFont.otf"))
+    {
+        cout << "Error loading font" << endl;
+    }
+    else
+    {
+        cout << "Font loaded" << endl;
+    }
 }
 
 void GamePause::update(enum GameState &gameStat)

@@ -153,7 +153,6 @@ void Game::pollEvents()
 }
 
 
-
 void Game::PlayGame()
 {
     if(gameState == GameState::PLAYING){

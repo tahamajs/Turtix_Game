@@ -27,9 +27,10 @@ private:
   std::vector<sf::Text> m_optionTexts;
   int m_selectedOptionIndex;
   RenderWindow *window;
+  Font *m_font;
 
   void updateOptionTexts();
-  void eventHandler();
   void pollEvents(enum GameState &gameState);
+
 };
 
