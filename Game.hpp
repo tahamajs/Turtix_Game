@@ -9,6 +9,7 @@
 #include "map.hpp"
 #include "star.hpp"
 #include "menu.hpp"
+#include "AudioClip.hpp"
 
 using namespace std ;
 using namespace sf ;
@@ -28,6 +29,7 @@ private:
     void scoreUpdate();
     void initMenu();
     bool isPause = false;
+    void initAudioClips();
 
     float x=0;
     float y=0;
@@ -45,6 +47,7 @@ private:
     player *player1;
     Menu *menu;
     GameState gameState = GameState::MENU;
+    vector<AudioClip*> audioClips;
 
 
     //star

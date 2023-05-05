@@ -7,6 +7,7 @@
 #include <vector>
 #include "map.hpp"
 #include "animation.hpp"
+#include "AudioClip.hpp"
 
 
 
@@ -27,6 +28,9 @@ private:
     void jump();
     void setgravity();
     void initAnimation();
+    void initAudioClips();
+
+
     Vector2f m_gravity;
     bool m_isJumping = false;
     Map *map;
@@ -35,6 +39,7 @@ private:
     bool canleft = true;
     bool canright = true;
     Animation *animation;
+    vector<AudioClip*> audioClips;
 
     
     int index = 0;

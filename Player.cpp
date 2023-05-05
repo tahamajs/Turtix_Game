@@ -16,6 +16,7 @@ player::player(int x, int y ) : velocity(0, 0) , m_gravity(0, Xgravity)
     this->sprite.setOrigin(sprite.getGlobalBounds().width/2, sprite.getGlobalBounds().height/2);
     initAnimation();
     this->loadTextures();
+    initAudioClips();
 }
 
 void player::initAnimation()
@@ -24,9 +25,11 @@ void player::initAnimation()
 }
 
 
-// void Player::initAnimation(){
-
-// }
+void player::initAudioClips()
+{
+    AudioClip *audioClip = new AudioClip("Audio/JumpSound.wav");
+    audioClips.push_back(audioClip);
+}
 
 void player::initMap(Map *map)
 {
@@ -191,6 +194,7 @@ void player::move(Event *ev)
         if (!m_isJumping)
         {
             m_isJumping = true;
+            audioClips[0]->play();
             jump();
         }
     }

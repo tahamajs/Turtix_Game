@@ -11,6 +11,7 @@ Game::Game()
     initMap();
     initStar();
     initMenu();
+    // initAudioClips();
     player1->initMap(map);
     sf::View view(sf::FloatRect(x, y, VIEW_HIGHT, VIEW_WIDTH));
     window->setView(view);
@@ -29,6 +30,12 @@ Game::~Game()
     delete this->window;
 }
 
+
+void Game::initAudioClips()
+{
+    // AudioClip *audioClip = new AudioClip("Audio/coin.wav");
+    // audioClips.push_back(audioClip);
+}
 
 void Game::initScore()
 {
