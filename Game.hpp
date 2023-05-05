@@ -11,6 +11,7 @@
 #include "menu.hpp"
 #include "AudioClip.hpp"
 #include "MusicPlayer.hpp"
+#include "Enemy.hpp"
 
 using namespace std ;
 using namespace sf ;
@@ -33,6 +34,7 @@ private:
     void initAudioClips();
     void initMusicPlayer();
     void resetGame();
+    void initEnemy();
 
     float x=0;
     float y=0;
@@ -52,6 +54,7 @@ private:
     GameState gameState = GameState::MENU;
     vector<AudioClip*> audioClips;  
     MusicPlayer *musicPlayer;
+    Enemy *enemi;
     
     
 

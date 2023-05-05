@@ -14,16 +14,20 @@ Game::Game()
     initStar();
     initMenu();
     initMusicPlayer();
+    initEnemy();
     // initAudioClips();
     player1->initMap(map);
+    enemi->initMap(map);
     // sf::View view(sf::FloatRect(x, y, VIEW_HIGHT, VIEW_WIDTH));
     sf::View view(sf::FloatRect(VIEW_HIGHT/2-500,VIEW_WIDTH/2, VIEW_HIGHT, VIEW_WIDTH));
     window->setView(view);
 
+    enemi->initPlayer(player1);
+
 }
 
 void Game::initMenu()
-{
+{ 
     // this->menu = new Menu(window,Vector2f(WINDOW_WIDTH/2,WINDOW_HEIGHT/2),Vector2f(300,300));
     // Vector2f Vect = Vector2f(WINDOW_WIDTH/2,WINDOW_HEIGHT/2);
     this->menu = new Menu(*this->window,view.getCenter());
@@ -62,6 +66,10 @@ void Game::initStar()
     this->star = new Star();
 }
 
+void Game::initEnemy()
+{
+    this->enemi = new Enemy(700,100,&gameState);
+}
 
 
 
@@ -137,6 +145,7 @@ void Game::Draw()
     star->Draw(*this->window);
     
     window->draw(this->BackgroundSprite);
+    enemi->Draw(*this->window);
 }
 
 void Game::initPlayer()

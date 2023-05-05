@@ -1,1 +1,1 @@
- g++ main.cpp menu.cpp AudioClip.cpp star.cpp MusicPlayer.cpp map.cpp animation.cpp GamePause.cpp  Player.cpp Game.cpp Score.cpp  -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio ; ./a.out
+ g++ main.cpp menu.cpp AudioClip.cpp star.cpp MusicPlayer.cpp map.cpp Game.cpp animation.cpp GamePause.cpp Player.cpp Score.cpp Enemy.cpp  -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio ; ./a.out
