@@ -16,6 +16,7 @@ public:
         Sprite* sprite;
         bool moveable = true;
         bool deadly = false;
+        bool Win = false;
     };
 
 
@@ -32,6 +33,7 @@ public:
     bool isCollisionOnLeft(const sf::Sprite& player);
     bool isCollisionOnRight(const sf::Sprite& player);
     int GateCollision(const sf::Sprite& player);
+    bool WiGateCollision(const sf::Sprite& player);
 
 
     

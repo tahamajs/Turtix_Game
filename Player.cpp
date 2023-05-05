@@ -2,8 +2,9 @@
 
 
 
-player::player(int x, int y ) : velocity(0, 0) , m_gravity(0, Xgravity)
+player::player(int x, int y  ,GameState *_gameState) : velocity(0, 0) , m_gravity(0, Xgravity)
 {
+    gameState = _gameState;
     MainPosition.x = x;
     MainPosition.y = y;
     this->position.x = x;
@@ -57,6 +58,15 @@ void player::checkCollisionWithMap()
         Ylimit= map->GateCollision(this->sprite);
         return;
     }
+
+    if (map->WiGateCollision(this->sprite))
+    {
+        cout << "collision on gate" << endl;
+        *gameState = GameState::WIN ;
+        // Ylimit = map->WiGateCollision(this->sprite);
+        return;
+    }
+    
 
     if(!map->isCollisionOnTop(sprite) && map->checkCollision(sprite.getGlobalBounds()) != -1 )
     {

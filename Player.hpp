@@ -41,6 +41,7 @@ private:
     Animation *animation;
     vector<AudioClip*> audioClips;
     Vector2f MainPosition;
+    GameState *gameState;
 
     
     int index = 0;
@@ -48,7 +49,7 @@ private:
 
 
 public:
-    player(int x, int y );
+    player(int x, int y  , GameState *gameState);
     ~player();
     void checkCollisionWithMap();
     // void initAnimation();

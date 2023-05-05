@@ -139,7 +139,7 @@ void Game::Draw()
 
 void Game::initPlayer()
 {
-    this->player1 = new player(100, 100);
+    this->player1 = new player(100, 100 , &gameState);
 }
 
 void Game::pollEvents()
@@ -218,7 +218,29 @@ void Game::PlayGame()
         resetGame();
         gameState = GameState::PLAYING;
     }
-    
+    else if (gameState == GameState::WIN)
+    {
+        // this->window->close();
+        cout << "You Win" << endl;
+        Text text;
+        Font *font = new Font();
+        font->loadFromFile("fonts/MenuFont.otf");
+        text.setFont(*font);
+        text.setString("You Win");
+        text.setCharacterSize(100);
+        text.setFillColor(Color::Red);
+        text.setPosition(view.getCenter().x-200,view.getCenter().y-100);
+        // this->window->clear(Color(135,206,235));
+        this->window->draw(text);
+        this->window->draw(this->BackgroundSprite);
+        this->window->display();
+
+
+        sleep(seconds(3));
+        this->window->close();
+        
+
+    }
 }
 
 void Game::initGamePause()

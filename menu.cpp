@@ -11,7 +11,7 @@ Menu::Menu(RenderWindow &_window, const sf::Vector2f& position)
   , m_selectedOptionIndex(0)
   , window(&_window)
 {
-    m_options.push_back("Play");
+    m_options.push_back("Start New Game");
     m_options.push_back("Exit");
     m_optionTexts.resize(m_options.size());
     m_optionTexts[0].setFillColor(sf::Color::Red);
@@ -87,16 +87,17 @@ void Menu::pollEvents(enum GameState &gameState) {
       case sf::Event::KeyReleased:
         switch (event.key.code) {
           case sf::Keyboard::Up:
-            cout << "Up" << endl;
+            // cout << "Up" << endl;
             moveUp();
             break;
           case sf::Keyboard::Down:
-            cout << "Down" << endl;
+            // cout << "Down" << endl;
             moveDown();
             break;
-          case sf::Keyboard::Return:
-            if (getSelectedOption() == "Play") {
-              gameState = GameState::PLAYING;
+          case sf::Keyboard::Enter:
+            if (getSelectedOption() == "Start New Game") {
+              cout << "Play" << endl;
+              gameState = GameState::RESTART;
             } else if (getSelectedOption() == "Exit") {
               window->close();
             }
