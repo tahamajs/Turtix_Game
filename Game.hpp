@@ -34,7 +34,8 @@ private:
     void initAudioClips();
     void initMusicPlayer();
     void resetGame();
-    void initEnemy();
+    void initEnemys();
+    void ColisionWithEnemy();
 
     float x=0;
     float y=0;
@@ -54,7 +55,8 @@ private:
     GameState gameState = GameState::MENU;
     vector<AudioClip*> audioClips;  
     MusicPlayer *musicPlayer;
-    Enemy *enemi;
+    // Enemy *enemi;
+    vector<Enemy*> enemys;
     
     
 

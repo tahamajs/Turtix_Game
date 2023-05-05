@@ -33,7 +33,7 @@ private:
     Vector2f m_gravity;
     bool m_isJumping = false;
     Map *map;
-    float Ylimit = 500;
+    float Ylimit = ENEMY_YLIMIT;
     vector<Sprite*> *collitionSprites;
     bool canleft = true;
     bool canright = true;
@@ -62,6 +62,9 @@ public:
     void spriteRectUpdate();
     void reset();
     void initPlayer(player *player);
+    bool isCollisionWithPlayerNONTOP();
+    bool isCollisionWithPlayerTop();
+
 
 
 };

@@ -43,6 +43,29 @@ Enemy::~Enemy()
 
 }
 
+bool Enemy::isCollisionWithPlayerNONTOP()
+{
+    if (sprite.getGlobalBounds().intersects(Player->getSprite().getGlobalBounds()))
+    {
+        if (Player->getSprite().getGlobalBounds().top + Player->getSprite().getGlobalBounds().height < sprite.getGlobalBounds().top + sprite.getGlobalBounds().height/2)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Enemy::isCollisionWithPlayerTop()
+{
+    if (sprite.getGlobalBounds().intersects(Player->getSprite().getGlobalBounds()))
+    {
+        if (Player->getSprite().getGlobalBounds().top + Player->getSprite().getGlobalBounds().height > sprite.getGlobalBounds().top + sprite.getGlobalBounds().height/2)
+        {
+            return true;
+        }
+    }
+    return false;
+}
 
 void Enemy::checkCollisionWithMap()
 {
@@ -56,7 +79,7 @@ void Enemy::checkCollisionWithMap()
         // Ylimit = map->checkCollision(sprite.getGlobalBounds());
     }else
     {
-        Ylimit = 500;
+        Ylimit = ENEMY_YLIMIT;
     }
 }
 void Enemy::setTexture(int index)
@@ -78,6 +101,7 @@ void Enemy::spriteRectUpdate()
     
     
 }
+
 
 void Enemy::initPlayer(player *_player)
 {

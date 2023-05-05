@@ -26,4 +26,6 @@ const int VIEW_WIDTH = 600;
 const int JUMP_SPEED = 50;
 const int DEAD_Y_DIRECTION = 3000;
 const int DEAD_LIMIT = 1500;
-const int RADIOS_OF_MOVEMENT = 200;
+const int RADIOS_OF_MOVEMENT = 100;
+const int ENEMY_SPEED = 2;
+const int ENEMY_YLIMIT = 1000;

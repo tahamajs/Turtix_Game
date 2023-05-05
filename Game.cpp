@@ -14,15 +14,23 @@ Game::Game()
     initStar();
     initMenu();
     initMusicPlayer();
-    initEnemy();
+    initEnemys();
     // initAudioClips();
     player1->initMap(map);
-    enemi->initMap(map);
+    // enemi->initMap(map);
+    for(int i = 0 ; i < enemys.size() ; i++)
+    {
+        enemys[i]->initMap(map);
+    }
     // sf::View view(sf::FloatRect(x, y, VIEW_HIGHT, VIEW_WIDTH));
     sf::View view(sf::FloatRect(VIEW_HIGHT/2-500,VIEW_WIDTH/2, VIEW_HIGHT, VIEW_WIDTH));
     window->setView(view);
 
-    enemi->initPlayer(player1);
+    // enemi->initPlayer(player1);
+    for(int i = 0 ; i < enemys.size() ; i++)
+    {
+        enemys[i]->initPlayer(player1);
+    }
 
 }
 
@@ -51,6 +59,22 @@ void Game::initMusicPlayer()
     musicPlayer->setLoop(true);
 }
 
+void Game::ColisionWithEnemy()
+{
+    // if (enemi->isCollisionWithPlayerNONTOP())
+    // {
+    //     // gameState = GameState::GAME_OVER;
+    //     cout << "GAME OVER" << endl;
+    // }
+    // if (enemi->isCollisionWithPlayerTop())
+    // {
+    //     // enemi->reset();
+    //     // score->addScore(100);
+    //     cout << "ENEMY DEAD" << endl;
+    // }
+    
+}
+
 void Game::initScore()
 {
     this->score = new Score();
@@ -66,16 +90,28 @@ void Game::initStar()
     this->star = new Star();
 }
 
-void Game::initEnemy()
+void Game::initEnemys()
 {
-    this->enemi = new Enemy(700,100,&gameState);
+    ifstream file;
+    file.open("enemy.map");
+    if (file.is_open())
+    {
+        int x, y;
+        int type ;
+        while (file >> type >> x >> y)
+        {
+            Enemy *enemi = new Enemy(x, y , &gameState);
+            enemys.push_back(enemi);
+        }
+    }
+
 }
 
 
 
 void Game::update()
 {
-
+    ColisionWithEnemy();
     if (!musicPlayer->isPlaying())
     {
         musicPlayer->play();
@@ -145,7 +181,11 @@ void Game::Draw()
     star->Draw(*this->window);
     
     window->draw(this->BackgroundSprite);
-    enemi->Draw(*this->window);
+
+    for (auto &enemi : enemys)
+    {
+        enemi->Draw(*window);
+    }
 }
 
 void Game::initPlayer()
@@ -278,4 +318,5 @@ void Game::resetGame()
     this->star->reset();
     this->gameState = GameState::PLAYING;
     this->musicPlayer->play();
+    // this->enemi->reset();
 }
