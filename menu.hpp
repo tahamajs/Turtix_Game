@@ -28,9 +28,12 @@ private:
   int m_selectedOptionIndex;
   RenderWindow *window;
   Font *m_font;
+  Texture *Bacground;
+  Sprite *backgroundSprite;
 
   void updateOptionTexts();
   void pollEvents(enum GameState &gameState);
+
 
 };
 

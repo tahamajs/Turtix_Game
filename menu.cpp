@@ -21,6 +21,13 @@ Menu::Menu(RenderWindow &_window, const sf::Vector2f& position)
     m_optionTexts[0].setPosition(m_position.x, m_position.y);
     m_optionTexts[1].setPosition(m_position.x, m_position.y + 50);
 
+    Bacground = new Texture();
+    Bacground->loadFromFile("Background.png", IntRect(0, 0, 800, 600));
+    backgroundSprite = new Sprite(*Bacground);
+
+    // Sprite *backgroundSprite = new Sprite();
+
+
     this->m_font = new Font();
     if (!this->m_font->loadFromFile("fonts/MenuFont.otf")) {
       cout << "Error loading font" << endl;
@@ -50,6 +57,7 @@ void Menu::render() const {
   // Draw the menu to the window
   window->clear();
   // cout << "Menu render" << endl;
+  window->draw(*backgroundSprite);
   for (const sf::Text& optionText : m_optionTexts) {
     
     window->draw(optionText);
