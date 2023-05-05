@@ -40,6 +40,7 @@ private:
     bool canright = true;
     Animation *animation;
     vector<AudioClip*> audioClips;
+    Vector2f MainPosition;
 
     
     int index = 0;
@@ -58,6 +59,7 @@ public:
     void initMap(Map *map);
     Sprite getSprite() { return this->sprite; }
     void spriteRectUpdate();
+    void reset();
 
 
 };

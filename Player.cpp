@@ -4,6 +4,8 @@
 
 player::player(int x, int y ) : velocity(0, 0) , m_gravity(0, Xgravity)
 {
+    MainPosition.x = x;
+    MainPosition.y = y;
     this->position.x = x;
     this->position.y = y;
     this->health = 100;
@@ -49,16 +51,19 @@ void player::setcollitionSprites(vector<Sprite*> *collitionSprites)
 void player::checkCollisionWithMap()
 {
     //jest for test
+    if(map->GateCollision(this->sprite) != -1)
+    {
+        cout << "collision on gate" << endl;
+        Ylimit= map->GateCollision(this->sprite);
+        return;
+    }
+
     if(!map->isCollisionOnTop(sprite) && map->checkCollision(sprite.getGlobalBounds()) != -1 )
     {
         // cout << "collision on top" << endl;
         velocity.y = JUMP_SPEED/4;
     }
-    if(map->GateCollision(this->sprite) != -1)
-    {
-        cout << "collision on gate" << endl;
-        Ylimit= map->GateCollision(this->sprite);
-    }
+    
 
     if (map->checkCollision(sprite.getGlobalBounds()) != -1 && map->isCollisionOnLeft(sprite) )
     {
@@ -235,4 +240,8 @@ void player::jump() {
     velocity.y = -JUMP_SPEED; // Set upward velocity for jump
 }
 
-    
+void player::reset()
+{
+    position = MainPosition;
+    this->sprite.setPosition(this->position);
+}

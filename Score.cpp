@@ -48,3 +48,9 @@ void Score::Draw(RenderTarget &target , Vector2f position)
     target.draw(this->text);
 }
 
+
+void Score::reset()
+{
+    this->score = 0 ;
+    this->text.setString("Score: " + to_string(this->score));
+}

@@ -67,3 +67,9 @@ bool Star::checkCollisionWithPlayer(FloatRect playerRect)
     }
     return false;
 }
+
+void Star::reset()
+{
+    Stars.clear();
+    this->loadStars();
+}

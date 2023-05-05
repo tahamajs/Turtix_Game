@@ -32,6 +32,7 @@ private:
     bool isPause = false;
     void initAudioClips();
     void initMusicPlayer();
+    void resetGame();
 
     float x=0;
     float y=0;

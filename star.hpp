@@ -36,7 +36,7 @@ public:
     void Draw(sf::RenderWindow &window);
     Star();
     ~Star();
-    
+    void reset();
     void update();
     bool checkCollisionWithPlayer(FloatRect playerRect);
 

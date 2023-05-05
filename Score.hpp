@@ -19,5 +19,6 @@ public:
     void increaseScore(int score);
     void Draw(RenderTarget &target , Vector2f position);
     bool isMaxScore() { return this->score >= MAX_SCORE; }
+    void reset();
 
 };

@@ -183,12 +183,9 @@ int Map::GateCollision(const sf::Sprite& player) {
         if (tile.sprite != nullptr) {
             sf::FloatRect tileBounds = tile.sprite->getGlobalBounds();
             if (bounds.intersects(tileBounds) && tile.type == 1) {
-                // cout << "Collision detected" << endl;
-                float right = bounds.left;
-                float left = tileBounds.left;
-                if (right >= left && bounds.top  > tileBounds.top ) {
-                    return i;
-                }
+                cout << "Collision detected            " << tile.sprite->getGlobalBounds().top + tile.sprite->getGlobalBounds().height << endl;
+                return tile.sprite->getGlobalBounds().top + tile.sprite->getGlobalBounds().height/4;
+                
             }
         }
     }

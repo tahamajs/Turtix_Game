@@ -73,6 +73,13 @@ void Game::update()
     pollEvents();
     map->update();
     scoreUpdate();
+    if (player1->getposition().y > DEAD_LIMIT)
+    {
+        gameState = GameState::GAME_OVER;
+    }
+    
+
+    
 
 }
 
@@ -120,8 +127,9 @@ void Game::scoreUpdate()
 
 void Game::Draw()
 {
-    this->player1->Draw(*this->window);
     map->draw(*window);
+    this->player1->Draw(*this->window);
+    
     score->Draw(*this->window,view.getCenter());
 
     star->Draw(*this->window);
@@ -187,6 +195,25 @@ void Game::PlayGame()
         menu->update(gameState, view.getCenter());
         menu->render();
     }
+    else if (gameState == GameState::GAME_OVER)
+    {
+        Text text;
+        Font *font = new Font();
+        font->loadFromFile("fonts/MenuFont.otf");
+        text.setFont(*font);
+        text.setString("Game Over");
+        text.setCharacterSize(100);
+        text.setFillColor(Color::Red);
+        text.setPosition(view.getCenter().x-200,view.getCenter().y-100);
+        // this->window->clear(Color(135,206,235));
+        this->window->draw(text);
+        this->window->draw(this->BackgroundSprite);
+        this->window->display();
+        sleep(seconds(3));
+        // this->window->close();
+        resetGame();
+    }
+    
 }
 
 void Game::initGamePause()
@@ -201,4 +228,14 @@ void Game::PauseGame()
 {
     this->gamePause->update(gameState, view.getCenter());
     this->gamePause->render();
+
+}
+
+void Game::resetGame()
+{
+    this->player1->reset();
+    this->score->reset();
+    this->star->reset();
+    this->gameState = GameState::PLAYING;
+    this->musicPlayer->play();
 }
