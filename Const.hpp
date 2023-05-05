@@ -7,7 +7,8 @@ enum GameState {
   PAUSED,
   GAME_OVER,
   EXIT,
-  WIN
+  WIN,
+  RESTART
 };
 
 

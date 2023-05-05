@@ -213,6 +213,11 @@ void Game::PlayGame()
         // this->window->close();
         resetGame();
     }
+    else if (gameState == GameState::RESTART)
+    {
+        resetGame();
+        gameState = GameState::PLAYING;
+    }
     
 }
 

@@ -23,9 +23,11 @@ private:
     Font *font;
     Text *text;
     Text *text2;
+    Text *text3;
 
     RectangleShape *button;
     RectangleShape *button2;
+    RectangleShape *button3;
     Vector2f position;
 
 
