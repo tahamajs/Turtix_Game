@@ -159,6 +159,25 @@ void player::updateWindowBoundsCollision()
     }
 }
 
+void player::decreaseHealth(int amount)
+{
+    time ++;
+    if (time < 100)
+    {
+        return;
+    }
+    this->health -= amount;
+    if (this->health < 0)
+    {
+        *gameState = GameState::GAME_OVER;
+    }
+}
+
+int player::getHealth()
+{
+    return this->health;
+}
+
 void player::Draw(RenderWindow &window)
 {
     // cout << Ylimit << "akjealkwejdhlawkejfl" << endl;
@@ -250,8 +269,28 @@ void player::jump() {
     velocity.y = -JUMP_SPEED; // Set upward velocity for jump
 }
 
+void player::showHelthBar(RenderWindow &window, Vector2f _position)
+{
+    RectangleShape healthBar;
+    float healthRatio = static_cast<float>(health) / MAX_HEALTH;
+    healthBar.setPosition(_position.x-300, _position.y-300);
+    healthBar.setSize(Vector2f(this->health, 10));
+    sf::Color healthFillColor(255, 0, 0);
+    sf::Color healthOutlineColor(0, 0, 0);
+    healthBar.setSize(sf::Vector2f(healthRatio * 200, 20));
+    healthBar.setFillColor(healthFillColor);
+    healthBar.setOutlineThickness(2);
+    healthBar.setOutlineColor(healthOutlineColor);
+    window.draw(healthBar);
+
+
+    // window.draw(healthBar);
+}
+
 void player::reset()
 {
     position = MainPosition;
     this->sprite.setPosition(this->position);
+    this->health = 100;
+
 }

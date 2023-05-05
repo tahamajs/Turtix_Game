@@ -42,6 +42,7 @@ private:
     vector<AudioClip*> audioClips;
     Vector2f MainPosition;
     GameState *gameState;
+    int time = 0;
 
     
     int index = 0;
@@ -61,6 +62,9 @@ public:
     Sprite getSprite() { return this->sprite; }
     void spriteRectUpdate();
     void reset();
+    void decreaseHealth(int amount);
+    int getHealth();
+    void showHelthBar(RenderWindow &window,Vector2f _position);
 
 
 };

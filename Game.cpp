@@ -18,19 +18,12 @@ Game::Game()
     // initAudioClips();
     player1->initMap(map);
     // enemi->initMap(map);
-    for(int i = 0 ; i < enemys.size() ; i++)
-    {
-        enemys[i]->initMap(map);
-    }
     // sf::View view(sf::FloatRect(x, y, VIEW_HIGHT, VIEW_WIDTH));
     sf::View view(sf::FloatRect(VIEW_HIGHT/2-500,VIEW_WIDTH/2, VIEW_HIGHT, VIEW_WIDTH));
     window->setView(view);
 
     // enemi->initPlayer(player1);
-    for(int i = 0 ; i < enemys.size() ; i++)
-    {
-        enemys[i]->initPlayer(player1);
-    }
+
 
 }
 
@@ -68,26 +61,17 @@ void Game::ColisionWithEnemy()
             // gameState = GameState::GAME_OVER;
             cout << "GAME OVER" << endl;
             enemys.erase(enemys.begin()+i);
+            score->increaseScore(2);
         }
         if (enemys[i]->isCollisionWithPlayerTop())
         {
             // enemi->reset();
             // score->addScore(100);
             cout << "ENEMY DEAD" << endl;
+            player1->decreaseHealth(5);
 
         }
     }
-    // if (enemi->isCollisionWithPlayerNONTOP())
-    // {
-    //     // gameState = GameState::GAME_OVER;
-    //     cout << "GAME OVER" << endl;
-    // }
-    // if (enemi->isCollisionWithPlayerTop())
-    // {
-    //     // enemi->reset();
-    //     // score->addScore(100);
-    //     cout << "ENEMY DEAD" << endl;
-    // }
     
 }
 
@@ -120,6 +104,11 @@ void Game::initEnemys()
             enemys.push_back(enemi);
         }
     }
+    for(int i = 0 ; i < enemys.size() ; i++)
+    {
+        enemys[i]->initMap(map);
+        enemys[i]->initPlayer(player1);
+    }
 
 }
 
@@ -139,7 +128,6 @@ void Game::update()
     {
         gameState = GameState::GAME_OVER;
     }
-    
 
     
 
@@ -193,7 +181,7 @@ void Game::Draw()
     this->player1->Draw(*this->window);
     
     score->Draw(*this->window,view.getCenter());
-
+    player1->showHelthBar(*this->window,view.getCenter());
     star->Draw(*this->window);
     
     window->draw(this->BackgroundSprite);
@@ -202,6 +190,7 @@ void Game::Draw()
     {
         enemi->Draw(*window);
     }
+    
 }
 
 void Game::initPlayer()
@@ -334,5 +323,6 @@ void Game::resetGame()
     this->star->reset();
     this->gameState = GameState::PLAYING;
     this->musicPlayer->play();
-    // this->enemi->reset();
+    enemys.clear();
+    initEnemys();
 }
