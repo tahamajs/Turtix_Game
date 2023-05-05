@@ -14,7 +14,8 @@ Game::Game()
     initMusicPlayer();
     // initAudioClips();
     player1->initMap(map);
-    sf::View view(sf::FloatRect(x, y, VIEW_HIGHT, VIEW_WIDTH));
+    // sf::View view(sf::FloatRect(x, y, VIEW_HIGHT, VIEW_WIDTH));
+    sf::View view(sf::FloatRect(VIEW_HIGHT/2-500,VIEW_WIDTH/2, VIEW_HIGHT, VIEW_WIDTH));
     window->setView(view);
 
 }
@@ -22,8 +23,8 @@ Game::Game()
 void Game::initMenu()
 {
     // this->menu = new Menu(window,Vector2f(WINDOW_WIDTH/2,WINDOW_HEIGHT/2),Vector2f(300,300));
-    Vector2f Vect = Vector2f(WINDOW_WIDTH/2,WINDOW_HEIGHT/2);
-    this->menu = new Menu(*this->window,Vect);
+    // Vector2f Vect = Vector2f(WINDOW_WIDTH/2,WINDOW_HEIGHT/2);
+    this->menu = new Menu(*this->window,view.getCenter());
 }
 
 Game::~Game()
@@ -41,6 +42,7 @@ void Game::initAudioClips()
 void Game::initMusicPlayer()
 {
     musicPlayer = new MusicPlayer("Audio/RunTimePlayingSound.wav");
+    musicPlayer->setLoop(true);
 }
 
 void Game::initScore()
@@ -71,9 +73,6 @@ void Game::update()
     pollEvents();
     map->update();
     scoreUpdate();
-    
-
-    
 
 }
 
@@ -185,18 +184,21 @@ void Game::PlayGame()
         PauseGame();
     }
     else if(gameState == GameState::MENU){
-        menu->update(gameState);
+        menu->update(gameState, view.getCenter());
         menu->render();
     }
 }
 
 void Game::initGamePause()
 {
-    this->gamePause = new GamePause(this->window);
+    // this->gamePause = new GamePause(this->window,view.getCenter());
+    
+    this->gamePause = new GamePause(*this->window);
+
 }
 
 void Game::PauseGame()
 {
-    this->gamePause->update(gameState);
+    this->gamePause->update(gameState, view.getCenter());
     this->gamePause->render();
 }

@@ -31,6 +31,7 @@ public:
     bool isCollisionOnTop( const sf::Sprite& player);
     bool isCollisionOnLeft(const sf::Sprite& player);
     bool isCollisionOnRight(const sf::Sprite& player);
+    int GateCollision(const sf::Sprite& player);
 
 
     

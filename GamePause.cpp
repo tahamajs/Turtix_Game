@@ -1,10 +1,11 @@
 #include "GamePause.hpp"    
 
-GamePause::GamePause(RenderWindow *window)
+GamePause::GamePause(RenderWindow& window )
 {
     this->initVariables();
     this->initFont();
-    this->initWindow(window);
+    // this->initWindow(*window);
+    pause_window = &window;
     // this->initBackground();
     this->initButtons();
     this->initText();
@@ -21,7 +22,7 @@ GamePause::~GamePause()
 
 void GamePause::initWindow(RenderWindow *window)
 {
-    this->pause_window = window;
+    // this->pause_window = window;
 }
 
 void GamePause::initVariables()
@@ -33,6 +34,7 @@ void GamePause::initVariables()
     this->text = nullptr;
     this->button = nullptr;
     this->pause_window = nullptr;
+
 }
 
 void GamePause::initBackground()
@@ -47,15 +49,24 @@ void GamePause::initButtons()
 {
     this->button = new RectangleShape(Vector2f(200, 50));
     this->button->setFillColor(Color::Red);
-    this->button->setPosition(WINDOW_WIDTH / 2 - this->button->getGlobalBounds().width / 2, WINDOW_HEIGHT / 2 - this->button->getGlobalBounds().height / 2);
+    this->button->setPosition(position);
+    this->button2 = new RectangleShape(Vector2f(200, 50));
+    this->button2->setFillColor(Color::Red);
+    this->button2->setPosition(position.x, position.y + 100);
     
 }
 
 void GamePause::initText()
 {
-    this->text = new Text("RESUME ", *this->font, 50);
+    this->text = new Text("RESUME ", *this->font, 100);
     this->text->setFillColor(Color::Green);
-    this->text->setPosition(this->button->getPosition().x + this->button->getGlobalBounds().width / 2 - this->text->getGlobalBounds().width / 2, this->button->getPosition().y + this->button->getGlobalBounds().height / 2 - this->text->getGlobalBounds().height / 2);
+    this->text->setPosition(position);
+    // this->text->setScale(1.5, 1.5);
+    this->text2 = new Text("MAIN MENU ", *this->font, 100);
+    this->text2->setFillColor(Color::Green);
+    this->text2->setPosition(position.x, position.y + 100);
+    // this->text2->setScale(1.5, 1.5);
+
 }
 
 void GamePause::initFont()
@@ -71,8 +82,14 @@ void GamePause::initFont()
     }
 }
 
-void GamePause::update(enum GameState &gameStat)
+void GamePause::update(enum GameState &gameStat , Vector2f position)
 {
+    this->position = position;
+    this->button->setPosition(position);
+    this->button2->setPosition(position.x, position.y + 100);
+    this->text->setPosition(position);
+    this->text2->setPosition(position.x, position.y + 100);
+    this->render();
     this->pollEvents(gameStat);
 }
 
@@ -81,8 +98,11 @@ void GamePause::render()
     this->pause_window->clear();
     // this->pause_window->draw(*this->backgroundSprite);
     this->pause_window->draw(*this->button);
+    this->pause_window->draw(*this->button2);
     this->pause_window->draw(*this->text);
+    this->pause_window->draw(*this->text2);
     this->pause_window->display();
+
 }
 
 void GamePause::pollEvents(enum GameState &gameStat)
@@ -107,6 +127,10 @@ void GamePause::pollEvents(enum GameState &gameStat)
                 if (this->button->getGlobalBounds().contains(this->pause_window->mapPixelToCoords(Mouse::getPosition(*this->pause_window))))
                 {
                     gameStat = GameState::PLAYING;
+                }
+                if (this->button2->getGlobalBounds().contains(this->pause_window->mapPixelToCoords(Mouse::getPosition(*this->pause_window))))
+                {
+                    gameStat = GameState::MENU;
                 }
             }
             break;

@@ -32,8 +32,8 @@ void MusicPlayer::setLoop(bool loop) {
 }
 
 void MusicPlayer::play() {
-    m_sound->setBuffer(*m_buffer);
-    m_sound->setLoop(m_loop);
+    // m_sound->setBuffer(*m_buffer);
+    // m_sound->setLoop(m_loop);
     m_sound->play();
 }
 

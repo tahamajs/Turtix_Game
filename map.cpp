@@ -73,7 +73,7 @@ void Map::loadTextures(const std::string& path) {
         cout << "Error loading texture" << endl;
         abort();
     }
-    if (!textures_[1] -> loadFromFile(path + "Gate_Start.png", IntRect(50, 50, HEIGHT_*3, WIDTH_*3)))
+    if (!textures_[1] -> loadFromFile(path + "Gate_Start.png", IntRect(50, 25, HEIGHT_*3, WIDTH_*4)))
     {
         cout << "Error loading texture" << endl;
         abort();
@@ -174,6 +174,25 @@ bool Map::isCollisionOnLeft(const sf::Sprite& player) {
         }
     }
     return false;
+}
+
+int Map::GateCollision(const sf::Sprite& player) {
+    sf::FloatRect bounds = player.getGlobalBounds();
+    for(int i = 0; i < tiles_.size(); i++) {
+        Tile& tile = tiles_[i];
+        if (tile.sprite != nullptr) {
+            sf::FloatRect tileBounds = tile.sprite->getGlobalBounds();
+            if (bounds.intersects(tileBounds) && tile.type == 1) {
+                // cout << "Collision detected" << endl;
+                float right = bounds.left;
+                float left = tileBounds.left;
+                if (right >= left && bounds.top  > tileBounds.top ) {
+                    return i;
+                }
+            }
+        }
+    }
+    return -1;
 }
 
 bool Map::isCollisionOnRight(const sf::Sprite& player) {

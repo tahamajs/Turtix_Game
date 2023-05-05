@@ -54,6 +54,11 @@ void player::checkCollisionWithMap()
         // cout << "collision on top" << endl;
         velocity.y = JUMP_SPEED/4;
     }
+    if(map->GateCollision(this->sprite) != -1)
+    {
+        cout << "collision on gate" << endl;
+        Ylimit= map->GateCollision(this->sprite);
+    }
 
     if (map->checkCollision(sprite.getGlobalBounds()) != -1 && map->isCollisionOnLeft(sprite) )
     {

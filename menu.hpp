@@ -18,7 +18,7 @@ public:
   void moveDown();
   std::string getSelectedOption() const;
   void render() const;
-  void update(enum GameState &gameState);
+  void update(enum GameState &gameState, Vector2f position);
   
 
 private:

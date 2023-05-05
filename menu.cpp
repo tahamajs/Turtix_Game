@@ -58,7 +58,8 @@ void Menu::render() const {
 
 }
 
-void Menu::update(enum GameState &gameState) {
+void Menu::update(enum GameState &gameState , Vector2f position) {
+    this->m_position = position;
     updateOptionTexts();
     pollEvents(gameState);
     
@@ -105,6 +106,14 @@ void Menu::pollEvents(enum GameState &gameState) {
         break;
       case sf::Event::Closed:
         window->close();
+        break;
+      case sf::Event::MouseMoved:
+        if (event.mouseMove.x > m_position.x && event.mouseMove.x < m_position.x + 100 && event.mouseMove.y > m_position.y && event.mouseMove.y < m_position.y + 50)
+        {
+          m_selectedOptionIndex = 0;
+          updateOptionTexts();
+        }
+        
         break;
     }
   }
