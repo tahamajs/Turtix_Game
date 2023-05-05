@@ -11,6 +11,7 @@ Game::Game()
     initMap();
     initStar();
     initMenu();
+    initMusicPlayer();
     // initAudioClips();
     player1->initMap(map);
     sf::View view(sf::FloatRect(x, y, VIEW_HIGHT, VIEW_WIDTH));
@@ -37,6 +38,11 @@ void Game::initAudioClips()
     // audioClips.push_back(audioClip);
 }
 
+void Game::initMusicPlayer()
+{
+    musicPlayer = new MusicPlayer("Audio/RunTimePlayingSound.wav");
+}
+
 void Game::initScore()
 {
     this->score = new Score();
@@ -58,9 +64,16 @@ void Game::initStar()
 void Game::update()
 {
 
+    if (!musicPlayer->isPlaying())
+    {
+        musicPlayer->play();
+    }
     pollEvents();
     map->update();
     scoreUpdate();
+    
+
+    
 
 }
 
@@ -141,9 +154,10 @@ void Game::pollEvents()
                 // GameState = 2;
                 gameState = GameState::PAUSED;
             }
-            else if (ev.key.code == Keyboard::Enter)
+            else if (ev.key.code == Keyboard::J)
             {
                 gameState = GameState::MENU;
+                musicPlayer->pause();
             }
 
             player1->move(&ev);
