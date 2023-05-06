@@ -3,7 +3,9 @@ CC_FLAGS = -g
 CC = ${CXX} ${CC_FLAGS} 
 BUILD_DIR = build
 SFFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
-all: tutrix.out
+all:${BUILD_DIR} tutrix.out 
+${BUILD_DIR}:
+	mkdir -p ${BUILD_DIR}
 tutrix.out: ${BUILD_DIR}/main.o ${BUILD_DIR}/star.o ${BUILD_DIR}/map.o ${BUILD_DIR}/animation.o ${BUILD_DIR}/GamePause.o  ${BUILD_DIR}/Player.o ${BUILD_DIR}/Game.o ${BUILD_DIR}/Score.o ${BUILD_DIR}/menu.o ${BUILD_DIR}/AudioClip.o ${BUILD_DIR}/MusicPlayer.o  ${BUILD_DIR}/Enemy.o
 	${CC} ${BUILD_DIR}/main.o ${BUILD_DIR}/star.o ${BUILD_DIR}/map.o ${BUILD_DIR}/animation.o ${BUILD_DIR}/GamePause.o  ${BUILD_DIR}/Player.o ${BUILD_DIR}/Game.o ${BUILD_DIR}/Score.o ${BUILD_DIR}/menu.o ${BUILD_DIR}/AudioClip.o ${BUILD_DIR}/MusicPlayer.o ${BUILD_DIR}/Enemy.o  -o ${BUILD_DIR}/tutrix.out ${SFFLAGS} ; ${BUILD_DIR}/tutrix.out
 
@@ -44,4 +46,7 @@ ${BUILD_DIR}/Enemy.o : Enemy.cpp Enemy.hpp Player.hpp animation.hpp map.hpp Audi
 	${CC} -c Enemy.cpp -o ${BUILD_DIR}/Enemy.o ${SFFLAGS}
 
 clean:
-	rm -rf build/ && mkdir -p build
+	rm -rf build/ 
+	
+	
+	
