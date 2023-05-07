@@ -15,7 +15,7 @@ TurtleChile::TurtleChile(int x, int y  ,GameState *_gameState) : velocity(10, 2)
     this->velocity.x = 2;
 
     this->health = 100;
-    rect = IntRect(0, 0 ,140, 140);
+    rect = IntRect(0, 0 ,130, 130);
     texture = new Texture();
     this->texture->loadFromFile("sprite/Chile.png", rect);
     this->sprite.setTexture(*this->texture);
@@ -30,7 +30,7 @@ TurtleChile::TurtleChile(int x, int y  ,GameState *_gameState) : velocity(10, 2)
 void TurtleChile::initAnimation()
 {
     animationFree = new Animation(sprite,16 ,6,.2,"sprite/chileFree.png",100,100);
-    animation = new Animation(sprite,10 ,5,.2,"sprite/Chile.png",140,140);
+    animation = new Animation(sprite,10 ,5,.2,"sprite/Chile.png",150,150);
 
 }
 

@@ -77,6 +77,7 @@ bool player::checkCollisionWithMap()
     if (map->WiGateCollision(this->sprite))
     {
         cout << "collision on gate" << endl;
+        
         *gameState = GameState::WIN ;
         // Ylimit = map->WiGateCollision(this->sprite);
         return false;

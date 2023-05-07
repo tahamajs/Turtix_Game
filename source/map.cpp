@@ -81,7 +81,7 @@ void Map::loadTextures(const std::string& path) {
         cout << "Error loading texture" << endl;
         abort();
     }
-    if (!textures_[2] -> loadFromFile(path + "Gate_End.png", IntRect(50, 30, HEIGHT_*3, WIDTH_*4)))
+    if (!textures_[2] -> loadFromFile(path + "Gate_End.png", IntRect(60, 0, HEIGHT_*3, WIDTH_*4)))
     {
         cout << "Error loading texture" << endl;
         abort();

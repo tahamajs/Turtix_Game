@@ -242,7 +242,7 @@ void Game::Draw()
 
 void Game::initPlayer()
 {
-    this->player1 = new player(100, 100 , &gameState);
+    this->player1 = new player(350, 100 , &gameState);
 }
 
 
@@ -326,6 +326,7 @@ void Game::PlayGame()
     }
     else if (gameState == GameState::WIN)
     {
+        if(turtleChiles.size()==0){
         //need to add win screen
         // this->window->close();
         cout << "You Win" << endl;
@@ -345,6 +346,9 @@ void Game::PlayGame()
 
         sleep(seconds(3));
         this->window->close();
+        }else{
+            gameState = GameState::PLAYING;
+        }
         
 
     }

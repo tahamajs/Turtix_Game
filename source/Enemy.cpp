@@ -175,7 +175,6 @@ void Enemy::setgravity()
         position.y = Ylimit;
         velocity.y = 0;
         m_isJumping = false;
-
     }
     sprite.setPosition(position);
 }
