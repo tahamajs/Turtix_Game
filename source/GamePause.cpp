@@ -40,7 +40,7 @@ void GamePause::initVariables()
 void GamePause::initBackground()
 {
     this->background = new Texture();
-    this->background->loadFromFile("../bkk.png");
+    this->background->loadFromFile("bkk.png");
     this->backgroundSprite = new Sprite();
     this->backgroundSprite->setTexture(*this->background);
 }
@@ -79,7 +79,7 @@ void GamePause::initText()
 void GamePause::initFont()
 {
     this->font = new Font();
-    if (!this->font->loadFromFile("./fonts/MenuFont.otf"))
+    if (!this->font->loadFromFile("fonts/MenuFont.otf"))
     {
         cout << "Error loading font" << endl;
     }

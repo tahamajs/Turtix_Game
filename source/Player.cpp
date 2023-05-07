@@ -12,7 +12,7 @@ player::player(int x, int y  ,GameState *_gameState) : velocity(0, 0) , m_gravit
     this->health = 100;
     rect = IntRect(0, 100 ,100, 100);
     texture = new Texture();
-    this->texture->loadFromFile("../sprite/2728FC_prev_ui.png", rect);
+    this->texture->loadFromFile("sprite/2728FC_prev_ui.png", rect);
     this->sprite.setTexture(*this->texture);
     this->sprite.setPosition(this->position);
     // this->sprite.setScale(-0.4, 0.4);
@@ -24,13 +24,13 @@ player::player(int x, int y  ,GameState *_gameState) : velocity(0, 0) , m_gravit
 
 void player::initAnimation()
 {
-    animation = new Animation(sprite,16 ,5,.1,"../sprite/MainPicture.png",96,96);
+    animation = new Animation(sprite,16 ,5,.1,"sprite/MainPicture.png",96,96);
 }
 
 
 void player::initAudioClips()
 {
-    AudioClip *audioClip = new AudioClip("../Audio/JumpSound.wav");
+    AudioClip *audioClip = new AudioClip("Audio/JumpSound.wav");
     audioClips.push_back(audioClip);
 }
 
@@ -49,14 +49,29 @@ void player::setcollitionSprites(vector<Sprite*> *collitionSprites)
     this->collitionSprites = collitionSprites;
 }
 
-void player::checkCollisionWithMap()
+bool player::checkCollisionWithMap()
 {
+
+    if(map->isDeadly(sprite.getGlobalBounds()))
+    {
+        cout << "collision on deadly" << endl;
+        // *gameState = GameState::DEAD ;
+        this->health -= 10;
+        if (this->health < 0)
+        {
+            // *gameState = GameState::GAME_OVER;
+            return true;
+        }
+        // sprite.setPosition(position.x, position.y-100);
+        velocity.y = -JUMP_SPEED/2;
+        return false;
+    }
     //jest for test
     if(map->GateCollision(this->sprite) != -1)
     {
         cout << "collision on gate" << endl;
         Ylimit= map->GateCollision(this->sprite);
-        return;
+        return false;
     }
 
     if (map->WiGateCollision(this->sprite))
@@ -64,7 +79,7 @@ void player::checkCollisionWithMap()
         cout << "collision on gate" << endl;
         *gameState = GameState::WIN ;
         // Ylimit = map->WiGateCollision(this->sprite);
-        return;
+        return false;
     }
     
 
@@ -105,6 +120,7 @@ void player::checkCollisionWithMap()
     {
         Ylimit = DEAD_Y_DIRECTION;
     }
+    return false;
 }
 void player::setTexture(int index)
 {
@@ -126,6 +142,7 @@ void player::spriteRectUpdate()
     
 }
 
+
 void player::loadTextures()
 {
 
@@ -133,7 +150,7 @@ void player::loadTextures()
     for (int i = 0; i < 5; i++)
     {
         textures.push_back(new Texture());
-        textures[i]->loadFromFile("../sprite/16F884_prev_ui.png", IntRect(i*135,0, 140, 140));
+        textures[i]->loadFromFile("sprite/16F884_prev_ui.png", IntRect(i*135,0, 140, 140));
     }
 
     
@@ -184,7 +201,7 @@ void player::Draw(RenderWindow &window)
     window.draw(this->sprite);
     this->setgravity();
     // spriteRectUpdate();
-    checkCollisionWithMap();
+    // checkCollisionWithMap();
     // animation->update(0.1);
     
     
@@ -273,7 +290,7 @@ void player::showHelthBar(RenderWindow &window, Vector2f _position)
 {
     RectangleShape healthBar;
     float healthRatio = static_cast<float>(health) / MAX_HEALTH;
-    healthBar.setPosition(_position.x-300, _position.y-300);
+    healthBar.setPosition(_position.x-300, _position.y-280);
     healthBar.setSize(Vector2f(this->health, 10));
     sf::Color healthFillColor(255, 0, 0);
     sf::Color healthOutlineColor(0, 0, 0);
@@ -287,6 +304,12 @@ void player::showHelthBar(RenderWindow &window, Vector2f _position)
     // window.draw(healthBar);
 }
 
+void player::setPosition(Vector2f _position)
+{
+    this->position = _position;
+    this->sprite.setPosition(this->position);
+}
+
 void player::reset()
 {
     position = MainPosition;
@@ -294,3 +317,4 @@ void player::reset()
     this->health = 100;
 
 }
+

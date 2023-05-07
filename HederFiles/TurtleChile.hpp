@@ -8,10 +8,11 @@
 #include "map.hpp"
 #include "animation.hpp"
 #include "AudioClip.hpp"
+#include <random>
+#include "Player.hpp"
 
 
-
-class player
+class TurtleChile
 {
 private:
 
@@ -25,16 +26,14 @@ private:
     void loadTextures();
     void setTexture(int index);
     void updateWindowBoundsCollision();
-
     void setgravity();
     void initAnimation();
-    void initAudioClips();
 
 
     Vector2f m_gravity;
     bool m_isJumping = false;
     Map *map;
-    float Ylimit = DEAD_Y_DIRECTION;
+    float Ylimit = 7000;
     vector<Sprite*> *collitionSprites;
     bool canleft = true;
     bool canright = true;
@@ -42,31 +41,31 @@ private:
     vector<AudioClip*> audioClips;
     Vector2f MainPosition;
     GameState *gameState;
-    int time = 0;
-
-    
+    int xRightMove = 0;
+    int xLeftMove = 100;
+    player *Player;
+    Animation *animationFree;
+    bool isColisionWithPlayer = false;
     int index = 0;
     
 
-
 public:
-    player(int x, int y  , GameState *gameState);
-    ~player();
-    bool checkCollisionWithMap();
+    TurtleChile(int x, int y  , GameState *gameState);
+    ~TurtleChile();
+    void checkCollisionWithMap();
     // void initAnimation();
     Vector2f getposition() { return this->position; }
     void Draw(RenderWindow &window);
-    void setcollitionSprites(vector<Sprite*> *collitionSprites);
-    void move(Event *ev);
-    void setPosition(Vector2f _position);
+    void move();
     void initMap(Map *map);
     Sprite getSprite() { return this->sprite; }
     void spriteRectUpdate();
     void reset();
-    void decreaseHealth(int amount);
-    int getHealth();
-    void showHelthBar(RenderWindow &window,Vector2f _position);
-    void jump();
+    void initPlayer(player *player);
+    bool isCollisionWithPlayerNONTOP();
+    bool isCollisionWithPlayerTop();
+    bool isCollitionOnGate();
+
 
 
 };

@@ -29,7 +29,7 @@ public:
         m_elapsedTime += deltaTime;
         
         if (m_elapsedTime >= m_frameDuration) {
-            cout << "Frame duration: " << index << endl;
+            // cout << "Frame duration: " << index << endl;
             m_elapsedTime -= m_frameDuration;
             m_currentFrame = (m_currentFrame + 1) % m_numFrames;
             m_sprite->setTexture(*textures[index]);

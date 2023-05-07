@@ -34,6 +34,8 @@ public:
     bool isCollisionOnRight(const sf::Sprite& player);
     int GateCollision(const sf::Sprite& player);
     bool WiGateCollision(const sf::Sprite& player);
+    bool isDeadly(FloatRect rect);
+
 
 
     

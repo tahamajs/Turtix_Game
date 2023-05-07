@@ -8,7 +8,9 @@ enum GameState {
   GAME_OVER,
   EXIT,
   WIN,
-  RESTART
+  RESTART,
+  DEAD,
+  LEVELS
 };
 
 
@@ -23,10 +25,10 @@ const float Xgravity = 5 ;
 const float Ygravity = 30 ;
 const int VIEW_HIGHT = 1000; 
 const int VIEW_WIDTH = 600;
-const int JUMP_SPEED = 50;
-const int DEAD_Y_DIRECTION = 3000;
-const int DEAD_LIMIT = 2500;
+const int JUMP_SPEED = 55;
+const int DEAD_Y_DIRECTION = 5000;
+const int DEAD_LIMIT = 4500;
 const int RADIOS_OF_MOVEMENT = 100;
 const int ENEMY_SPEED = 2;
-const int ENEMY_YLIMIT = 3000;
+const int ENEMY_YLIMIT = 7000;
 const int MAX_HEALTH = 100;

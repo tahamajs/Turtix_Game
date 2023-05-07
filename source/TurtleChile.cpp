@@ -1,8 +1,9 @@
-#include "../HederFiles/Enemy.hpp"
+#include "../HederFiles/TurtleChile.hpp"
 
 
 
-Enemy::Enemy(int x, int y  ,GameState *_gameState) : velocity(10, 0) , m_gravity(0, Xgravity)
+
+TurtleChile::TurtleChile(int x, int y  ,GameState *_gameState) : velocity(10, 2) , m_gravity(0, Xgravity)
 {
     gameState = _gameState;
     MainPosition.x = x;
@@ -14,48 +15,54 @@ Enemy::Enemy(int x, int y  ,GameState *_gameState) : velocity(10, 0) , m_gravity
     this->velocity.x = 2;
 
     this->health = 100;
-    rect = IntRect(0, 0 ,83, 83);
+    rect = IntRect(0, 0 ,140, 140);
     texture = new Texture();
-    this->texture->loadFromFile("sprite/Enemy_1.png", rect);
+    this->texture->loadFromFile("sprite/Chile.png", rect);
     this->sprite.setTexture(*this->texture);
     this->sprite.setPosition(this->position);
-    this->sprite.setScale(1.2, 1.2);
+    this->sprite.setScale(-.8, .8);
     this->sprite.setOrigin(sprite.getGlobalBounds().width/2, sprite.getGlobalBounds().height/2);
     initAnimation();
     
     this->loadTextures();
 }
 
-void Enemy::initAnimation()
+void TurtleChile::initAnimation()
 {
-    animation = new Animation(sprite,36 ,6,.2,"sprite/Enemy_1.png",83,83);
+    animationFree = new Animation(sprite,16 ,6,.2,"sprite/chileFree.png",100,100);
+    animation = new Animation(sprite,10 ,5,.2,"sprite/Chile.png",140,140);
+
 }
 
 
 
-void Enemy::initMap(Map *map)
+void TurtleChile::initMap(Map *map)
 {
     this->map = map;
 }
 
-Enemy::~Enemy()
+TurtleChile::~TurtleChile()
 {
 
 }
 
-bool Enemy::isCollisionWithPlayerNONTOP()
+bool TurtleChile::isCollisionWithPlayerNONTOP()
 {
     if (sprite.getGlobalBounds().intersects(Player->getSprite().getGlobalBounds()))
     {
         if (Player->getSprite().getGlobalBounds().top + Player->getSprite().getGlobalBounds().height < sprite.getGlobalBounds().top + sprite.getGlobalBounds().height/2)
         {
+            isColisionWithPlayer = true;
+            cout << "isColisionWithPlayer" << endl;
+            sprite.setTextureRect(IntRect(0, 0, 100, 100));
             return true;
+
         }
     }
     return false;
 }
 
-bool Enemy::isCollisionWithPlayerTop()
+bool TurtleChile::isCollisionWithPlayerTop()
 {
     if (sprite.getGlobalBounds().intersects(Player->getSprite().getGlobalBounds()))
     {
@@ -67,27 +74,22 @@ bool Enemy::isCollisionWithPlayerTop()
     return false;
 }
 
-void Enemy::checkCollisionWithMap()
+void TurtleChile::checkCollisionWithMap()
 {
     if ((Ylimit = map->checkCollision(sprite.getGlobalBounds())) != -1 && map->isCollisionOnTop(sprite) )
     {
-        // this->velocity.y = 0;if 
-        // cout << "collection " << endl ;
         Ylimit = map->checkCollision(sprite.getGlobalBounds()) - sprite.getGlobalBounds().height/4;
-        // cout << "collision " << map->checkCollision(sprite.getGlobalBounds()) << "  " << Ylimit<<  endl;
-
-        // Ylimit = map->checkCollision(sprite.getGlobalBounds());
     }else
     {
-        Ylimit = ENEMY_YLIMIT;
+        Ylimit = 7000;
     }
 }
-void Enemy::setTexture(int index)
+void TurtleChile::setTexture(int index)
 {
     this->sprite.setTexture(*textures[index]);
 }
 
-void Enemy::spriteRectUpdate()
+void TurtleChile::spriteRectUpdate()
 {
     if (index == textures.size() - 1)
     {
@@ -103,12 +105,12 @@ void Enemy::spriteRectUpdate()
 }
 
 
-void Enemy::initPlayer(player *_player)
+void TurtleChile::initPlayer(player *_player)
 {
     Player = _player;
 }
 
-void Enemy::loadTextures()
+void TurtleChile::loadTextures()
 {
 
 
@@ -117,11 +119,9 @@ void Enemy::loadTextures()
         textures.push_back(new Texture());
         textures[i]->loadFromFile("sprite/16F884_prev_ui.png", IntRect(i*135,0, 140, 140));
     }
-
-    
 }
 
-void Enemy::updateWindowBoundsCollision()
+void TurtleChile::updateWindowBoundsCollision()
 {
     if (this->position.x < 0)
     {
@@ -134,38 +134,46 @@ void Enemy::updateWindowBoundsCollision()
 
 }
 
-void Enemy::Draw(RenderWindow &window)
+void TurtleChile::Draw(RenderWindow &window)
 {
     window.draw(this->sprite);
     this->setgravity();
     // spriteRectUpdate();
     checkCollisionWithMap();
-    animation->update(0.1);
-    this->move();
+    if(isColisionWithPlayer){
+        animationFree->update(0.1);
+        this->move();
+    }else{
+        animation->update(0.1);
+        isCollisionWithPlayerNONTOP();
+    }
+    
+    
+    
+    
     
     
 }
 
-void Enemy::move()
+bool TurtleChile::isCollitionOnGate()
 {
-    if (position.x < xLeftMove)
+    if (map->WiGateCollision(sprite))
     {
-        position.x = xLeftMove;
-        velocity.x = -velocity.x;
-        this->sprite.setScale(-1, 1);
+        return true;
     }
-    else if (position.x + sprite.getGlobalBounds().width > xRightMove)
-    {
-        position.x = xRightMove - sprite.getGlobalBounds().width;
-        velocity.x = -velocity.x;
-        this->sprite.setScale(1, 1);
-    }
+    return false;
+}
+
+void TurtleChile::move()
+{
+
+    // velocity.x = ;
     position.x += velocity.x;
     sprite.setPosition(position);
     
 }
 
-void Enemy::setgravity()
+void TurtleChile::setgravity()
 {
     position = sprite.getPosition();
     velocity.y += m_gravity.y;
@@ -183,7 +191,7 @@ void Enemy::setgravity()
 
 
 
-void Enemy::reset()
+void TurtleChile::reset()
 {
     position = MainPosition;
     this->sprite.setPosition(this->position);

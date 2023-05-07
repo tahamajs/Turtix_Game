@@ -12,6 +12,8 @@
 #include "AudioClip.hpp"
 #include "MusicPlayer.hpp"
 #include "Enemy.hpp"
+#include "TurtleChile.hpp"
+#include "LevelScreen.hpp"
 
 using namespace std ;
 using namespace sf ;
@@ -36,9 +38,15 @@ private:
     void resetGame();
     void initEnemys();
     void ColisionWithEnemy();
+    void isCpllitionWithDeadTile();
+    void initChileTurtle();
+    void decreaseJune();
+    void showHearts();
+    void initHearts();
 
     float x=0;
     float y=0;
+    int June = 5;
 
 
     View view;
@@ -46,6 +54,7 @@ private:
     Texture Background;
     Sprite BackgroundSprite;
     GamePause *gamePause;
+    LevelScreen *levelScreen;
 
     VideoMode videoMode;
     RenderWindow *window;
@@ -57,6 +66,10 @@ private:
     MusicPlayer *musicPlayer;
     // Enemy *enemi;
     vector<Enemy*> enemys;
+    vector<TurtleChile*> turtleChiles;
+    vector<Sprite*> Hearts;
+    // Texture *HeartTexture;
+    // Sprite *HeartSprite;
     
     
 

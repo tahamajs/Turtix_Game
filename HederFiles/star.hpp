@@ -5,6 +5,7 @@
 #include <SFML/Window.hpp>
 #include <fstream>
 #include "Const.hpp"
+#include "Score.hpp"
 
 class Star
 {
@@ -38,7 +39,7 @@ public:
     ~Star();
     void reset();
     void update();
-    bool checkCollisionWithPlayer(FloatRect playerRect);
+    int checkCollisionWithPlayer(FloatRect playerRect , Score &_score);
 
 
 };

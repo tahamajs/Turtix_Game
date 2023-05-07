@@ -16,7 +16,7 @@ Score::~Score()
 
 void Score::initFont()
 {
-    if(!this->font.loadFromFile("../fonts/BrunoAceSC-Regular.ttf"))
+    if(!this->font.loadFromFile("fonts/BrunoAceSC-Regular.ttf"))
     {
         cout << "ERROR::GAME::INITFONT::Could not load font" << endl ;
     }

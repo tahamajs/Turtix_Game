@@ -1,6 +1,6 @@
 #include "../HederFiles/map.hpp"
 const int HEIGHT_ = 100 ;
-const int WIDTH_ = 50 ;
+const int WIDTH_ = 65 ;
 
 void Map::update() {
     for (Tile& tile : tiles_) {
@@ -40,8 +40,8 @@ float Map::checkCollision(FloatRect rect) {
 
 Map::Map(int size) : size_(size) {
     // tiles_.resize(size_);
-    loadTextures("../sprite/");
-    loadTiles("../");
+    loadTextures("sprite/");
+    loadTiles("Maps/");
     cout << "Map loaded" << endl;
 }
 
@@ -71,22 +71,23 @@ void Map::loadTextures(const std::string& path) {
     textures_[2] = new Texture;
     textures_[3] = new Texture;
     textures_[4] = new Texture;
-    if (!textures_[0] -> loadFromFile(path + "Shadows.png", IntRect(0, 650,HEIGHT_, WIDTH_)))
+    if (!textures_[0] -> loadFromFile(path + "Shadows.png", IntRect(90, 30,HEIGHT_, WIDTH_)))
     {
         cout << "Error loading texture" << endl;
         abort();
     }
-    if (!textures_[1] -> loadFromFile(path + "Gate_Start.png", IntRect(60, 30, HEIGHT_*3, WIDTH_*4)))
+    if (!textures_[1] -> loadFromFile(path + "Gate_Start.png", IntRect(60, 0, HEIGHT_*3, WIDTH_*4)))
     {
         cout << "Error loading texture" << endl;
         abort();
     }
-    if (!textures_[2] -> loadFromFile(path + "Gate_End.png", IntRect(60, 30, HEIGHT_*3, WIDTH_*4)))
+    if (!textures_[2] -> loadFromFile(path + "Gate_End.png", IntRect(50, 30, HEIGHT_*3, WIDTH_*4)))
     {
         cout << "Error loading texture" << endl;
         abort();
     }
-    if (!textures_[3] -> loadFromFile(path + "MainPicture2.png", IntRect(100, 600, HEIGHT_, WIDTH_)))
+
+    if (!textures_[3] -> loadFromFile(path + "MainPicture2.png", IntRect(100, 580, HEIGHT_, WIDTH_*2)))
     {
         cout << "Error loading texture" << endl;
         abort();
@@ -141,6 +142,24 @@ void Map::loadTiles(const std::string& path) {
         
     }
 
+}
+
+bool Map::isDeadly(FloatRect rect) {
+    for(int i = 0; i < tiles_.size(); i++) {
+        Tile& tile = tiles_[i];
+        if (tile.sprite != nullptr) {
+            sf::FloatRect tileBounds = tile.sprite->getGlobalBounds();
+            if (rect.intersects(tileBounds) && tile.type == 3) {
+                // cout << "Collision detected" << endl;
+                // cout << "Collision on top" << endl;
+                return true;
+                // Vector2f position = player.getPosition();
+                // player.setPosition(position.x, position.y - 100);
+                // player.setPosition(, 100);
+            }
+        }
+    }
+    return false;
 }
 
 // need to check leter if it works

@@ -14,17 +14,31 @@ Game::Game()
     initStar();
     initMenu();
     initMusicPlayer();
+    initChileTurtle();
     initEnemys();
-    // initAudioClips();
+    initHearts();
     player1->initMap(map);
     // enemi->initMap(map);
     // sf::View view(sf::FloatRect(x, y, VIEW_HIGHT, VIEW_WIDTH));
     sf::View view(sf::FloatRect(VIEW_HIGHT/2-500,VIEW_WIDTH/2, VIEW_HIGHT, VIEW_WIDTH));
     window->setView(view);
 
+
     // enemi->initPlayer(player1);
 
 
+}
+
+void Game::decreaseJune()
+{
+    June--;
+    Hearts.pop_back();
+    player1->reset();
+    if(June == 0)
+    {
+        gameState = GameState::GAME_OVER;
+
+    }
 }
 
 void Game::initMenu()
@@ -32,6 +46,7 @@ void Game::initMenu()
     // this->menu = new Menu(window,Vector2f(WINDOW_WIDTH/2,WINDOW_HEIGHT/2),Vector2f(300,300));
     // Vector2f Vect = Vector2f(WINDOW_WIDTH/2,WINDOW_HEIGHT/2);
     this->menu = new Menu(*this->window,view.getCenter());
+    this->levelScreen = new LevelScreen(*this->window,view.getCenter());
 }
 
 Game::~Game()
@@ -48,27 +63,45 @@ void Game::initAudioClips()
 
 void Game::initMusicPlayer()
 {
-    musicPlayer = new MusicPlayer("../Audio/RunTimePlayingSound.wav");
+    musicPlayer = new MusicPlayer("Audio/RunTimePlayingSound.wav");
     musicPlayer->setLoop(true);
 }
 
+void Game::initChileTurtle()
+{
+    ifstream file;
+    file.open("Maps/turtleChule.map");
+    
+    if (file.is_open())
+    {
+        int x, y;
+        // int type ;
+        while (file  >> x >> y)
+        {
+            TurtleChile *turtleChile = new TurtleChile(x, y , &gameState);
+            turtleChiles.push_back(turtleChile);
+            cout << "turtleChile" << endl;
+        }
+    }
+    for(int i = 0 ; i < turtleChiles.size() ; i++)
+    {
+        turtleChiles[i]->initMap(map);
+        turtleChiles[i]->initPlayer(player1);
+    }
+}
 void Game::ColisionWithEnemy()
 {
     for(int i = 0 ; i < enemys.size() ; i++)
     {
         if (enemys[i]->isCollisionWithPlayerNONTOP())
         {
-            // gameState = GameState::GAME_OVER;
-            cout << "GAME OVER" << endl;
             enemys.erase(enemys.begin()+i);
             score->increaseScore(2);
         }
-        if (enemys[i]->isCollisionWithPlayerTop())
+        else if (enemys[i]->isCollisionWithPlayerTop())
         {
-            // enemi->reset();
-            // score->addScore(100);
-            cout << "ENEMY DEAD" << endl;
-            player1->decreaseHealth(5);
+
+            decreaseJune();
 
         }
     }
@@ -93,7 +126,7 @@ void Game::initStar()
 void Game::initEnemys()
 {
     ifstream file;
-    file.open("enemy.map");
+    file.open("Maps/enemy.map");
     if (file.is_open())
     {
         int x, y;
@@ -124,9 +157,22 @@ void Game::update()
     pollEvents();
     map->update();
     scoreUpdate();
-    if (player1->getposition().y > DEAD_LIMIT)
+    if(player1->checkCollisionWithMap()){
+        decreaseJune();
+    }
+    if (view.getCenter().y > DEAD_LIMIT)
     {
-        gameState = GameState::GAME_OVER;
+        decreaseJune();
+        // player1->reset();
+    }
+    // cout << player1->getposition().y << endl;
+
+    for(int i = 0 ; i < turtleChiles.size() ; i++)
+    {
+        if (turtleChiles[i]->isCollitionOnGate())
+        {
+            turtleChiles.erase(turtleChiles.begin()+i);
+        }
     }
 
     
@@ -168,11 +214,7 @@ bool Game::running()
 
 void Game::scoreUpdate()
 {
-    if (star->checkCollisionWithPlayer(player1->getSprite().getGlobalBounds()))
-    {
-        score->increaseScore(2);
-    }
-    
+    star->checkCollisionWithPlayer(player1->getSprite().getGlobalBounds(),*this->score);
 }   
 
 void Game::Draw()
@@ -190,6 +232,11 @@ void Game::Draw()
     {
         enemi->Draw(*window);
     }
+    for (auto &turtleChile : turtleChiles)
+    {
+        turtleChile->Draw(*window);
+    }
+    showHearts();
     
 }
 
@@ -197,6 +244,8 @@ void Game::initPlayer()
 {
     this->player1 = new player(100, 100 , &gameState);
 }
+
+
 
 void Game::pollEvents()
 {
@@ -256,7 +305,7 @@ void Game::PlayGame()
         //need to add game over screen
         Text text;
         Font *font = new Font();
-        font->loadFromFile("../fonts/MenuFont.otf");
+        font->loadFromFile("fonts/MenuFont.otf");
         text.setFont(*font);
         text.setString("Game Over");
         text.setCharacterSize(100);
@@ -282,7 +331,7 @@ void Game::PlayGame()
         cout << "You Win" << endl;
         Text text;
         Font *font = new Font();
-        font->loadFromFile("../fonts/MenuFont.otf");
+        font->loadFromFile("fonts/MenuFont.otf");
         text.setFont(*font);
         text.setString("You Win");
         text.setCharacterSize(100);
@@ -299,6 +348,12 @@ void Game::PlayGame()
         
 
     }
+    else if(gameState == GameState::LEVELS)
+    {
+        levelScreen->update(gameState, view.getCenter());
+        levelScreen->render();
+    }
+    
 }
 
 void Game::initGamePause()
@@ -323,6 +378,36 @@ void Game::resetGame()
     this->star->reset();
     this->gameState = GameState::PLAYING;
     this->musicPlayer->play();
+    this->June = 5;
+
     enemys.clear();
     initEnemys();
+
+}
+
+void Game::showHearts()
+{
+    for(int i = 0 ; i < June ; i++)
+    {
+        Hearts[i]->setPosition(view.getCenter().x - 400 + i*50,view.getCenter().y - 260);
+        window->draw(*Hearts[i]);
+    }
+}
+
+void Game::initHearts()
+{
+
+
+    for(int i = 0 ; i < June ; i++)
+    {
+        Texture *HeartTexture = new Texture();
+        HeartTexture->loadFromFile("sprite/heart.png");
+        Sprite *HeartSprite = new Sprite();
+        HeartSprite->setTexture(*HeartTexture);
+        HeartSprite->setScale(0.1, 0.1);
+        HeartSprite->setPosition(view.getCenter().x - 400 + i*50,view.getCenter().y - 150);
+
+        Hearts.push_back(HeartSprite);
+    }
+
 }

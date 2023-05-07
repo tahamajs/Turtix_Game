@@ -1,23 +1,38 @@
 // #pragma once
-#include "../HederFiles/menu.hpp"
+#include "../HederFiles/LevelScreen.hpp"
 
 
-string Menu::getSelectedOption() const {
+string LevelScreen::getSelectedOption() const {
   return m_options[m_selectedOptionIndex];
 }
 
-Menu::Menu(RenderWindow &_window, const sf::Vector2f& position)
+LevelScreen::LevelScreen(RenderWindow &_window, const sf::Vector2f& position)
   : m_position(position)
   , m_selectedOptionIndex(0)
   , window(&_window)
 {
-    m_options.push_back("Start New Game");
-    m_options.push_back("Exit");
-    m_options.push_back("Levels");
+    m_options.push_back("Level 1");
+    m_options.push_back("Level 2");
+    m_options.push_back("Level 3");
+    m_options.push_back("Level 4");
+    m_options.push_back("Level 5");
+    m_options.push_back("Level 6");
+    m_options.push_back("Level 7");
+    m_options.push_back("Level 8");
+    m_options.push_back("Level 9");
+    m_options.push_back("Level 10");
+
     m_optionTexts.resize(m_options.size());
     m_optionTexts[0].setFillColor(sf::Color::Red);
     m_optionTexts[1].setFillColor(sf::Color::White);
     m_optionTexts[2].setFillColor(sf::Color::White);
+    m_optionTexts[3].setFillColor(sf::Color::White);
+    m_optionTexts[4].setFillColor(sf::Color::White);
+    m_optionTexts[5].setFillColor(sf::Color::White);
+    m_optionTexts[6].setFillColor(sf::Color::White);
+    m_optionTexts[7].setFillColor(sf::Color::White);
+    m_optionTexts[8].setFillColor(sf::Color::White);
+    m_optionTexts[9].setFillColor(sf::Color::White);
 
     m_optionTexts[0].setCharacterSize(60);
     m_optionTexts[0].setString(m_options[0]);
@@ -25,9 +40,33 @@ Menu::Menu(RenderWindow &_window, const sf::Vector2f& position)
     m_optionTexts[1].setCharacterSize(60);
     m_optionTexts[2].setString(m_options[2]);
     m_optionTexts[2].setCharacterSize(60);
+    m_optionTexts[3].setString(m_options[3]);
+    m_optionTexts[3].setCharacterSize(60);
+    m_optionTexts[4].setString(m_options[4]);
+    m_optionTexts[4].setCharacterSize(60);
+    m_optionTexts[5].setString(m_options[5]);
+    m_optionTexts[5].setCharacterSize(60);
+    m_optionTexts[6].setString(m_options[6]);
+    m_optionTexts[6].setCharacterSize(60);
+    m_optionTexts[7].setString(m_options[7]);
+    m_optionTexts[7].setCharacterSize(60);
+    m_optionTexts[8].setString(m_options[8]);
+    m_optionTexts[8].setCharacterSize(60);
+    m_optionTexts[9].setString(m_options[9]);
+    m_optionTexts[9].setCharacterSize(60);
+
+
     m_optionTexts[0].setPosition(m_position.x-100, m_position.y);
     m_optionTexts[1].setPosition(m_position.x-100, m_position.y + 50);
     m_optionTexts[2].setPosition(m_position.x-100, m_position.y + 100);
+    m_optionTexts[3].setPosition(m_position.x-100, m_position.y + 150);
+    m_optionTexts[4].setPosition(m_position.x-100, m_position.y + 200);
+    m_optionTexts[5].setPosition(m_position.x-100, m_position.y + 250);
+    m_optionTexts[6].setPosition(m_position.x-100, m_position.y + 300);
+    m_optionTexts[7].setPosition(m_position.x-100, m_position.y + 350);
+    m_optionTexts[8].setPosition(m_position.x-100, m_position.y + 400);
+    m_optionTexts[9].setPosition(m_position.x-100, m_position.y + 450);
+
 
     Bacground = new Texture();
     Bacground->loadFromFile("sprite/BA.png", IntRect(0, 0, 1200, 2000));
@@ -45,27 +84,35 @@ Menu::Menu(RenderWindow &_window, const sf::Vector2f& position)
     m_optionTexts[0].setFont(*this->m_font);
     m_optionTexts[1].setFont(*this->m_font);
     m_optionTexts[2].setFont(*this->m_font);
+    m_optionTexts[3].setFont(*this->m_font);
+    m_optionTexts[4].setFont(*this->m_font);
+    m_optionTexts[5].setFont(*this->m_font);
+    m_optionTexts[6].setFont(*this->m_font);
+    m_optionTexts[7].setFont(*this->m_font);
+    m_optionTexts[8].setFont(*this->m_font);
+    m_optionTexts[9].setFont(*this->m_font);
+    
 
 
-    // cout << "Menu constructor" << endl;
+    // cout << "LevelScreen constructor" << endl;
 
 }
 
-void Menu::moveUp() {
+void LevelScreen::moveUp() {
     m_selectedOptionIndex = (m_selectedOptionIndex + m_options.size() - 1) % m_options.size();
     updateOptionTexts();
 }
 
 
-void Menu::moveDown() {
+void LevelScreen::moveDown() {
   m_selectedOptionIndex = (m_selectedOptionIndex + 1) % m_options.size();
   updateOptionTexts();
 }
 
-void Menu::render() const {
-  // Draw the menu to the window
+void LevelScreen::render() const {
+  // Draw the LevelScreen to the window
   window->clear();
-  // cout << "Menu render" << endl;
+  // cout << "LevelScreen render" << endl;
   window->draw(*backgroundSprite);
   backgroundSprite->setPosition(m_position.x - 700, m_position.y - 700);
   for (const sf::Text& optionText : m_optionTexts) {
@@ -76,15 +123,15 @@ void Menu::render() const {
 
 }
 
-void Menu::update(enum GameState &gameState , Vector2f position) {
+void LevelScreen::update(enum GameState &gameState , Vector2f position) {
     this->m_position = position;
     updateOptionTexts();
     pollEvents(gameState);
     
 }
 
-void Menu::updateOptionTexts() {
-  // Update the appearance of the menu options based on the selected option
+void LevelScreen::updateOptionTexts() {
+  // Update the appearance of the LevelScreen options based on the selected option
   for (int i = 0; i < m_options.size(); ++i) {
     sf::Text& optionText = m_optionTexts[i];
     optionText.setString(m_options[i]);
@@ -99,7 +146,7 @@ void Menu::updateOptionTexts() {
   }
 }
 
-void Menu::pollEvents(enum GameState &gameState) {
+void LevelScreen::pollEvents(enum GameState &gameState) {
   sf::Event event;
   while (window->pollEvent(event)) {
     switch (event.type) {
@@ -114,15 +161,10 @@ void Menu::pollEvents(enum GameState &gameState) {
             moveDown();
             break;
           case sf::Keyboard::Enter:
-            if (getSelectedOption() == "Start New Game") {
+            if (getSelectedOption() == "Level 1") {
               cout << "Play" << endl;
-              gameState = GameState::RESTART;
-            } else if (getSelectedOption() == "Exit") {
-              window->close();
-            } else if (getSelectedOption() == "Levels") {
-              cout << "Levels" << endl;
-              gameState = GameState::LEVELS;
-            }
+              gameState = GameState::PLAYING;
+            } 
             
             break;
         }

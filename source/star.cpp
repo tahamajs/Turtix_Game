@@ -15,7 +15,7 @@ Star::~Star()
 void Star::loadStars()
 {
     fstream file;
-    file.open("stars.mpp");  
+    file.open("Maps/stars.mpp");  
     if (file.is_open())
     {
         cout << "File stars.mpp is open" << endl;
@@ -52,27 +52,44 @@ void Star::Draw(RenderWindow &window)
 void Star::loadTextures()
 {
     textures.push_back(new Texture());
-    textures[0]->loadFromFile("../sprite/stars_1.png", IntRect(0,0, 100, 100));
+    textures[0]->loadFromFile("sprite/stars_1.png", IntRect(0,0, 100, 100));
     textures.push_back(new Texture());
-    textures[1]->loadFromFile("../sprite/star_2.png", IntRect(0,0, 100, 100));
+    textures[1]->loadFromFile("sprite/star_2.png", IntRect(0,0, 100, 100));
     textures.push_back(new Texture());
-    textures[2]->loadFromFile("../sprite/dimond_1.png", IntRect(0,0, 100, 100));
+    textures[2]->loadFromFile("sprite/dimond_1.png", IntRect(0,0, 100, 100));
     textures.push_back(new Texture());
-    textures[3]->loadFromFile("../sprite/dimont_2.png", IntRect(0,0, 100, 100));
+    textures[3]->loadFromFile("sprite/dimont_2.png", IntRect(0,0, 100, 100));
     
 }
 
-bool Star::checkCollisionWithPlayer(FloatRect playerRect)
+int Star::checkCollisionWithPlayer(FloatRect playerRect , Score &_score)
 {
     for (int i = 0; i < Stars.size(); i++)
     {
         if (Stars[i].sprite->getGlobalBounds().intersects(playerRect))
         {
+            int x = Stars[i].type;
+            
             Stars.erase(Stars.begin() + i);
-            return true;
+            if (x == 0)
+            {
+                _score.increaseScore(2);
+            }else if (x == 1)
+            {
+                _score.increaseScore(2);
+            }else if (x == 2)
+            {
+                _score.increaseScore(5);
+            }else if (x == 3)
+            {
+                _score.increaseScore(5);
+            }
+            return x;
+            
+            
         }
     }
-    return false;
+    return -1;
 }
 
 void Star::reset()
