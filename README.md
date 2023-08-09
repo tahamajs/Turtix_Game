@@ -99,7 +99,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-Have fun playing and customizing Turtix Game! If you encounter any issues or have questions, feel free to contact us at [your@email.com](mailto:your@email.com).
+Have fun playing and customizing Turtix Game! If you encounter any issues or have questions, feel free to contact us at [taha.maj4@email.com](mailto:taha.maj4@email.com).
 
 
 
