@@ -32,14 +32,17 @@ Ensure you have the necessary dependencies installed on your system before proce
 ### Building the Game
 
 1. Clone the repository or download the source code and extract it to a directory of your choice.
+
 `git clone github.com/tahamajs/Turtix_Game.git`
 
 
-2. Open a terminal and navigate to the game directory.
+3. Open a terminal and navigate to the game directory.
+
 `cd Turtix_Game`
 
 
-3. Use the provided makefile to build the game.
+5. Use the provided makefile to build the game.
+   
 `make `
 
 
