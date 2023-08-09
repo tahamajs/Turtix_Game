@@ -1,6 +1,6 @@
 # Turtix Game
 
-![Turtix Game](screenshot.jpg)
+![Turtix Game](Game_pic/Screenshot from 2023-08-09 23-32-36.png)
 
 Turtix Game is a C++ game developed using the SFML library. It offers an interactive gameplay experience where players control a turtle, collecting stars and avoiding enemies across various maps. This readme provides essential information on running the game, modifying maps, and understanding the game's structure.
 
