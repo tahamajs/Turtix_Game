@@ -47,9 +47,6 @@ public:
         loadTextures();
     }
 
-    // void draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    //     // target.draw(m_sprite, states);
-    // }
 
     void loadTextures()
     {
@@ -58,12 +55,6 @@ public:
         for (int i = 0; i < m_numFrames; i++)
         {
             Texture *texture = new Texture();
-            
-            if(texture->loadFromFile(path, IntRect(i_*m_frameWidth,j_*m_frameHight, m_frameWidth, m_frameHight))){
-                // cout << "Texture loaded successfully" << endl;
-            }else{
-                // cout << "Texture not loaded" << endl;
-            }
             textures.push_back(texture);
             if (i_ ==  colNums-1)
             {

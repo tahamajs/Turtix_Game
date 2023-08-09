@@ -20,18 +20,12 @@ private:
 
     };
 
-
-
     sf::Vector2f position;
     sf::Texture texture;
     vector<sf::Texture*> textures;
     vector<TileStar> Stars;
-
-    // void updateWindowBoundsCollision();
     void loadTextures();
-    void loadStars();
-    // vector<Texture*> Textures;
-    
+    void loadStars();   
     
 public:
     void Draw(sf::RenderWindow &window);

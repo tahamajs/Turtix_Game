@@ -4,7 +4,6 @@ GamePause::GamePause(RenderWindow& window )
 {
     this->initVariables();
     this->initFont();
-    // this->initWindow(*window);
     pause_window = &window;
     this->initBackground();
     this->initButtons();
@@ -18,11 +17,6 @@ GamePause::~GamePause()
     delete this->font;
     delete this->text;
     delete this->button;
-}
-
-void GamePause::initWindow(RenderWindow *window)
-{
-    // this->pause_window = window;
 }
 
 void GamePause::initVariables()
@@ -64,16 +58,12 @@ void GamePause::initText()
     this->text = new Text("RESUME GAME", *this->font,50);
     this->text->setFillColor(Color::Green);
     this->text->setPosition(position);
-    // this->text->setScale(1.5, 1.5);
     this->text2 = new Text("MAIN MENU ", *this->font, 50);
     this->text2->setFillColor(Color::Green);
     this->text2->setPosition(position.x, position.y + 100);
-    // this->text2->setScale(1.5, 1.5);
     this->text3 = new Text("RESTART GAME ", *this->font, 50);
     this->text3->setFillColor(Color::Green);
     this->text3->setPosition(position.x, position.y + 200);
-    // this->text3->setScale(1.5, 1.5);
-
 }
 
 void GamePause::initFont()
@@ -108,7 +98,6 @@ void GamePause::update(enum GameState &gameStat , Vector2f _position)
 void GamePause::render()
 {
     this->pause_window->clear();
-    // this->pause_window->draw(*this->backgroundSprite);
     this->pause_window->draw(*this->button);
     this->pause_window->draw(*this->button2);
     this->pause_window->draw(*this->button3);
@@ -131,7 +120,6 @@ void GamePause::pollEvents(enum GameState &gameStat)
         case Event::KeyPressed:
             if (this->ev.key.code == Keyboard::Escape)
             {
-                // this->pause_window->close();
                 gameStat = GameState::PLAYING;
             }
             break;

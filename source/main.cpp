@@ -17,13 +17,6 @@ int main(){
             float time = clock.restart().asMilliseconds();
             game.PlayGame() ;
             clock.restart();
-            // cout << time << endl;
         }
-        
-        
-        
-
-        
     }
-    
 }

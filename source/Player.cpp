@@ -55,14 +55,11 @@ bool player::checkCollisionWithMap()
     if(map->isDeadly(sprite.getGlobalBounds()))
     {
         cout << "collision on deadly" << endl;
-        // *gameState = GameState::DEAD ;
         this->health -= 10;
         if (this->health < 0)
         {
-            // *gameState = GameState::GAME_OVER;
             return true;
         }
-        // sprite.setPosition(position.x, position.y-100);
         velocity.y = -JUMP_SPEED/2;
         return false;
     }
@@ -77,16 +74,13 @@ bool player::checkCollisionWithMap()
     if (map->WiGateCollision(this->sprite))
     {
         cout << "collision on gate" << endl;
-        
         *gameState = GameState::WIN ;
-        // Ylimit = map->WiGateCollision(this->sprite);
         return false;
     }
     
 
     if(!map->isCollisionOnTop(sprite) && map->checkCollision(sprite.getGlobalBounds()) != -1 )
     {
-        // cout << "collision on top" << endl;
         velocity.y = JUMP_SPEED/4;
     }
     
@@ -111,12 +105,7 @@ bool player::checkCollisionWithMap()
 
     if ((Ylimit = map->checkCollision(sprite.getGlobalBounds())) != -1 && map->isCollisionOnTop(sprite) )
     {
-        // this->velocity.y = 0;if 
-        // cout << "collection " << endl ;
         Ylimit = map->checkCollision(sprite.getGlobalBounds())-sprite.getGlobalBounds().height/2;
-        // cout << "collision " << map->checkCollision(sprite.getGlobalBounds()) << "  " << Ylimit<<  endl;
-
-        // Ylimit = map->checkCollision(sprite.getGlobalBounds());
     }else
     {
         Ylimit = DEAD_Y_DIRECTION;
@@ -198,14 +187,9 @@ int player::getHealth()
 
 void player::Draw(RenderWindow &window)
 {
-    // cout << Ylimit << "akjealkwejdhlawkejfl" << endl;
     window.draw(this->sprite);
     this->setgravity();
-    // spriteRectUpdate();
-    // checkCollisionWithMap();
-    // animation->update(0.1);
-    
-    
+
 }
 
 void player::move(Event *ev)
@@ -220,11 +204,6 @@ void player::move(Event *ev)
             this->sprite.setScale(1, 1);
 
         }
-
-        // this->position.x -= STEP_SIZE;
-        
-        // sprite.setPosition(sprite.getPosition().x, sprite.getPosition().y + sprite.getGlobalBounds().width);
-
     }
     if (Keyboard::isKeyPressed(Keyboard::Key::D))
     {
@@ -240,11 +219,6 @@ void player::move(Event *ev)
             
 
         }
-        // this->position.x += STEP_SIZE;
-        
-
-        // sprite.setPosition(sprite.getPosition().x, sprite.getPosition().y + sprite.getGlobalBounds().width);
-        
     }
     if (Keyboard::isKeyPressed(Keyboard::Key::Space))
     {
@@ -256,13 +230,8 @@ void player::move(Event *ev)
         }
     }
 
-
-
-
     this->sprite.setPosition(this->position);
 
-    // updateWindowBoundsCollision();
-    
 }
 
 void player::setgravity()
@@ -284,7 +253,7 @@ void player::setgravity()
 
 
 void player::jump() {
-    velocity.y = -JUMP_SPEED; // Set upward velocity for jump
+    velocity.y = -JUMP_SPEED;
 }
 
 void player::showHelthBar(RenderWindow &window, Vector2f _position)
@@ -300,9 +269,6 @@ void player::showHelthBar(RenderWindow &window, Vector2f _position)
     healthBar.setOutlineThickness(2);
     healthBar.setOutlineColor(healthOutlineColor);
     window.draw(healthBar);
-
-
-    // window.draw(healthBar);
 }
 
 void player::setPosition(Vector2f _position)

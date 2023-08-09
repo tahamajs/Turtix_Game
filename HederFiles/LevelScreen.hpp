@@ -7,9 +7,6 @@
 #include "Const.hpp"
 
 
-
-
-
 class LevelScreen {
 public:
     LevelScreen(RenderWindow &_window, const sf::Vector2f& position);

@@ -11,15 +11,12 @@ class AudioClip
 {
 public:
     AudioClip(const std::string& _filePath, float volume = 100.f, float pitch = 1.f)
-        // : m_buffer(), m_sound(), m_volume(volume), m_pitch(pitch) , filePath(_filePath)
     {
         m_buffer = new sf::SoundBuffer();
         m_sound = new sf::Sound();
         m_volume = volume;
         m_pitch = pitch;
         filePath = _filePath;
-        
-        // m_buffer->loadFromFile(filePath);
         if (!m_buffer->loadFromFile(filePath))
         {
             std::cout << "Error loading sound" << std::endl;

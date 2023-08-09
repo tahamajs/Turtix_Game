@@ -8,18 +8,13 @@
 #include "AudioClip.hpp"
 
 
-
-
 class GameOverScreen {
 public:
     GameOverScreen(sf::RenderWindow& window, int score) :
         m_window(window),
         m_score(score)
     {
-        // Load font
         m_font.loadFromFile("arial.ttf");
-
-        // Create text objects
         m_gameOverText.setFont(m_font);
         m_gameOverText.setString("Game Over!");
         m_gameOverText.setCharacterSize(50);
@@ -37,7 +32,6 @@ public:
     }
 
     void display() {
-        // Draw text objects to the window
         m_window.draw(m_gameOverText);
         m_window.draw(m_scoreText);
         m_window.draw(m_restartText);
@@ -45,7 +39,6 @@ public:
 
     bool handleInput(sf::Event event) {
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::R) {
-            // Restart the game
             return true;
         }
         return false;

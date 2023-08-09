@@ -31,8 +31,6 @@ float Map::checkCollision(FloatRect rect) {
             {
                 cout << "Tile sprite is null" << endl;
             }
-            
-            // cout << "Tile is not moveable" << endl;
         }
     }
     return -1;

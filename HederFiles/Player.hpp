@@ -14,6 +14,12 @@
 class player
 {
 private:
+    void loadTextures();
+    void setTexture(int index);
+    void updateWindowBoundsCollision();
+    void setgravity();
+    void initAnimation();
+    void initAudioClips();
 
     Vector2f position;
     Vector2f velocity;
@@ -22,15 +28,6 @@ private:
     IntRect rect;
     Texture *texture ;
     vector<Texture*> textures;
-    void loadTextures();
-    void setTexture(int index);
-    void updateWindowBoundsCollision();
-
-    void setgravity();
-    void initAnimation();
-    void initAudioClips();
-
-
     Vector2f m_gravity;
     bool m_isJumping = false;
     Map *map;
@@ -43,8 +40,6 @@ private:
     Vector2f MainPosition;
     GameState *gameState;
     int time = 0;
-
-    
     int index = 0;
     
 

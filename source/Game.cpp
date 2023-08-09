@@ -18,14 +18,8 @@ Game::Game()
     initEnemys();
     initHearts();
     player1->initMap(map);
-    // enemi->initMap(map);
-    // sf::View view(sf::FloatRect(x, y, VIEW_HIGHT, VIEW_WIDTH));
     sf::View view(sf::FloatRect(VIEW_HIGHT/2-500,VIEW_WIDTH/2, VIEW_HIGHT, VIEW_WIDTH));
     window->setView(view);
-
-
-    // enemi->initPlayer(player1);
-
 
 }
 
@@ -43,8 +37,6 @@ void Game::decreaseJune()
 
 void Game::initMenu()
 { 
-    // this->menu = new Menu(window,Vector2f(WINDOW_WIDTH/2,WINDOW_HEIGHT/2),Vector2f(300,300));
-    // Vector2f Vect = Vector2f(WINDOW_WIDTH/2,WINDOW_HEIGHT/2);
     this->menu = new Menu(*this->window,view.getCenter());
     this->levelScreen = new LevelScreen(*this->window,view.getCenter());
 }
@@ -52,13 +44,6 @@ void Game::initMenu()
 Game::~Game()
 {
     delete this->window;
-}
-
-
-void Game::initAudioClips()
-{
-    // AudioClip *audioClip = new AudioClip("Audio/coin.wav");
-    // audioClips.push_back(audioClip);
 }
 
 void Game::initMusicPlayer()
@@ -75,7 +60,6 @@ void Game::initChileTurtle()
     if (file.is_open())
     {
         int x, y;
-        // int type ;
         while (file  >> x >> y)
         {
             TurtleChile *turtleChile = new TurtleChile(x, y , &gameState);
@@ -163,9 +147,7 @@ void Game::update()
     if (view.getCenter().y > DEAD_LIMIT)
     {
         decreaseJune();
-        // player1->reset();
     }
-    // cout << player1->getposition().y << endl;
 
     for(int i = 0 ; i < turtleChiles.size() ; i++)
     {
@@ -262,8 +244,6 @@ void Game::pollEvents()
         case Event::KeyPressed:
             if (ev.key.code == Keyboard::Escape)
             {
-                // isPause = !isPause;
-                // GameState = 2;
                 gameState = GameState::PAUSED;
             }
             else if (ev.key.code == Keyboard::J)
@@ -302,7 +282,6 @@ void Game::PlayGame()
     }
     else if (gameState == GameState::GAME_OVER)
     {
-        //need to add game over screen
         Text text;
         Font *font = new Font();
         font->loadFromFile("fonts/MenuFont.otf");
@@ -311,12 +290,10 @@ void Game::PlayGame()
         text.setCharacterSize(100);
         text.setFillColor(Color::Red);
         text.setPosition(view.getCenter().x-200,view.getCenter().y-100);
-        // this->window->clear(Color(135,206,235));
         this->window->draw(text);
         this->window->draw(this->BackgroundSprite);
         this->window->display();
         sleep(seconds(3));
-        // this->window->close();
         resetGame();
     }
     else if (gameState == GameState::RESTART)
@@ -327,8 +304,6 @@ void Game::PlayGame()
     else if (gameState == GameState::WIN)
     {
         if(turtleChiles.size()==0){
-        //need to add win screen
-        // this->window->close();
         cout << "You Win" << endl;
         Text text;
         Font *font = new Font();
@@ -338,12 +313,9 @@ void Game::PlayGame()
         text.setCharacterSize(100);
         text.setFillColor(Color::Red);
         text.setPosition(view.getCenter().x-200,view.getCenter().y-100);
-        // this->window->clear(Color(135,206,235));
         this->window->draw(text);
         this->window->draw(this->BackgroundSprite);
         this->window->display();
-
-
         sleep(seconds(3));
         this->window->close();
         }else{
@@ -362,10 +334,7 @@ void Game::PlayGame()
 
 void Game::initGamePause()
 {
-    // this->gamePause = new GamePause(this->window,view.getCenter());
-    
     this->gamePause = new GamePause(*this->window);
-
 }
 
 void Game::PauseGame()

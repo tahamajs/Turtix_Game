@@ -12,7 +12,6 @@ Enemy::Enemy(int x, int y  ,GameState *_gameState) : velocity(10, 0) , m_gravity
     this->position.x = x;
     this->position.y = y;
     this->velocity.x = 2;
-
     this->health = 100;
     rect = IntRect(0, 0 ,83, 83);
     texture = new Texture();
@@ -71,12 +70,7 @@ void Enemy::checkCollisionWithMap()
 {
     if ((Ylimit = map->checkCollision(sprite.getGlobalBounds())) != -1 && map->isCollisionOnTop(sprite) )
     {
-        // this->velocity.y = 0;if 
-        // cout << "collection " << endl ;
         Ylimit = map->checkCollision(sprite.getGlobalBounds()) - sprite.getGlobalBounds().height/4;
-        // cout << "collision " << map->checkCollision(sprite.getGlobalBounds()) << "  " << Ylimit<<  endl;
-
-        // Ylimit = map->checkCollision(sprite.getGlobalBounds());
     }else
     {
         Ylimit = ENEMY_YLIMIT;
@@ -138,7 +132,6 @@ void Enemy::Draw(RenderWindow &window)
 {
     window.draw(this->sprite);
     this->setgravity();
-    // spriteRectUpdate();
     checkCollisionWithMap();
     animation->update(0.1);
     this->move();
@@ -178,8 +171,6 @@ void Enemy::setgravity()
     }
     sprite.setPosition(position);
 }
-
-
 
 
 void Enemy::reset()

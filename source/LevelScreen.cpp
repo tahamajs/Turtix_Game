@@ -72,9 +72,6 @@ LevelScreen::LevelScreen(RenderWindow &_window, const sf::Vector2f& position)
     Bacground->loadFromFile("sprite/BA.png", IntRect(0, 0, 1200, 2000));
     backgroundSprite = new Sprite(*Bacground);
 
-    // Sprite *backgroundSprite = new Sprite();
-
-
     this->m_font = new Font();
     if (!this->m_font->loadFromFile("fonts/MenuFont.otf")) {
       cout << "Error loading font" << endl;
@@ -91,10 +88,6 @@ LevelScreen::LevelScreen(RenderWindow &_window, const sf::Vector2f& position)
     m_optionTexts[7].setFont(*this->m_font);
     m_optionTexts[8].setFont(*this->m_font);
     m_optionTexts[9].setFont(*this->m_font);
-    
-
-
-    // cout << "LevelScreen constructor" << endl;
 
 }
 
@@ -110,9 +103,7 @@ void LevelScreen::moveDown() {
 }
 
 void LevelScreen::render() const {
-  // Draw the LevelScreen to the window
   window->clear();
-  // cout << "LevelScreen render" << endl;
   window->draw(*backgroundSprite);
   backgroundSprite->setPosition(m_position.x - 700, m_position.y - 700);
   for (const sf::Text& optionText : m_optionTexts) {
@@ -131,7 +122,6 @@ void LevelScreen::update(enum GameState &gameState , Vector2f position) {
 }
 
 void LevelScreen::updateOptionTexts() {
-  // Update the appearance of the LevelScreen options based on the selected option
   for (int i = 0; i < m_options.size(); ++i) {
     sf::Text& optionText = m_optionTexts[i];
     optionText.setString(m_options[i]);
@@ -153,11 +143,9 @@ void LevelScreen::pollEvents(enum GameState &gameState) {
       case sf::Event::KeyReleased:
         switch (event.key.code) {
           case sf::Keyboard::Up:
-            // cout << "Up" << endl;
             moveUp();
             break;
           case sf::Keyboard::Down:
-            // cout << "Down" << endl;
             moveDown();
             break;
           case sf::Keyboard::Enter:

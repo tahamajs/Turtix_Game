@@ -19,13 +19,10 @@ public:
         bool Win = false;
     };
 
-
-
     Map(int size);
     ~Map();
     void draw(RenderWindow& window);
     void update();
-    Vector2f getSize();
     void loadTextures(const std::string& path);
     void loadTiles(const std::string& path);
     float checkCollision(FloatRect rect);
@@ -37,8 +34,6 @@ public:
     bool isDeadly(FloatRect rect);
 
 
-
-    
 
 private:
     std::vector<Tile> tiles_;

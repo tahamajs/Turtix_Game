@@ -12,14 +12,12 @@
 
 class Menu {
 public:
-    Menu(RenderWindow &_window, const sf::Vector2f& position);
-
+  Menu(RenderWindow &_window, const sf::Vector2f& position);
   void moveUp();
   void moveDown();
   std::string getSelectedOption() const;
   void render() const;
   void update(enum GameState &gameState, Vector2f position);
-  
 
 private:
   sf::Vector2f m_position;

@@ -19,7 +19,6 @@ public:
     void stop();
     bool isPlaying() const;
     void loadSound();
-
     
 private:
     sf::Sound *m_sound;

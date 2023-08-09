@@ -48,14 +48,12 @@ private:
     float y=0;
     int June = 5;
 
-
     View view;
     Score *score;
     Texture Background;
     Sprite BackgroundSprite;
     GamePause *gamePause;
     LevelScreen *levelScreen;
-
     VideoMode videoMode;
     RenderWindow *window;
     Event ev;
@@ -64,23 +62,10 @@ private:
     GameState gameState = GameState::MENU;
     vector<AudioClip*> audioClips;  
     MusicPlayer *musicPlayer;
-    // Enemy *enemi;
     vector<Enemy*> enemys;
     vector<TurtleChile*> turtleChiles;
     vector<Sprite*> Hearts;
-    // Texture *HeartTexture;
-    // Sprite *HeartSprite;
-    
-    
-
-
-    //star
     Star *star;
-
-
-
-
-
 
 
 public:
