@@ -55,24 +55,37 @@ The goal of Turtix Game is to control the turtle character, collect stars, and a
 
 ## Modifying Maps
 
-You can customize Turtix Game by modifying the maps, adding new levels, or changing the position of stars and enemies.
+You can customize Turtix Game by modifying the map files located in the `maps` folder. These map files contain data that define the positions of various gameplay elements such as stars, enemies, and other interactive objects.
 
 ### Map Files
 
-Map files are text files representing the game levels. Each character in the map corresponds to an element:
+Each map file represents a game level and follows a specific format to define the positions of elements:
 
-- `.`: Empty space
-- `#`: Solid ground
-- `*`: Star
-- `T`: Turtle (player's character)
-- `E`: Enemy
+- **Playground Tiles:** The layout of the playground is defined using lines in the format `TILE x y type`, where `x` and `y` are the coordinates of the tile and `type` specifies the tile type.
 
-Feel free to edit the existing map files or create new ones to add more levels and challenges to the game.
+- **Stars:** The positions of stars are specified as lines in the format `Star type x y`.
 
+- **Turtle Child:** The positions of turtle children are defined with lines in the format `type x y`.
+
+- **Enemies:** Similarly, enemy positions are specified using lines in the format `type x y`.
+
+To customize the maps:
+
+1. Navigate to the `maps` folder in the game directory.
+2. Open the map file corresponding to the level you want to modify using a text editor.
+3. Locate the sections of the file that define the positions of playground tiles, stars, turtle children, and enemies.
+4. Adjust the coordinates and types as needed to change the positions and types of elements.
+5. Save the changes and run the game to see your modifications take effect.
+
+Refer to the comments within the map files for guidance on the specific format used for specifying coordinates and types.
+
+Feel free to experiment with the map files and modify the positions and types of elements to create new levels, challenges, and experiences within the game.
 ## Screenshots
 
 ![Gameplay](Game_pic/1.png)
+
 ![Gameplay](Game_pic/3.png)
+
 ![Gameplay](Game_pic/2.png)
 _Gameplay screenshot showcasing the turtle character collecting stars._
 
