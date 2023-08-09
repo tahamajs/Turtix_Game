@@ -71,7 +71,9 @@ Feel free to edit the existing map files or create new ones to add more levels a
 
 ## Screenshots
 
-![Gameplay](gameplay1.jpg)
+![Gameplay](Game_pic/1.png)
+![Gameplay](Game_pic/3.png)
+![Gameplay](Game_pic/2.png)
 _Gameplay screenshot showcasing the turtle character collecting stars._
 
 ## Contributing
